@@ -1,0 +1,18 @@
+version = 1
+
+test_patterns = [
+    "commands/**",
+    "main.go"
+]
+
+exclude_patterns = [
+    "go.sum",
+    ".gitignore"
+]
+
+[[analyzers]]
+name = "go"
+enabled = true
+
+  [analyzers.meta]
+  import_paths = ["github.com/provsalt/Prisons-Go"]
