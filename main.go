@@ -2,6 +2,7 @@ package main
 
 import (
 	"Prison/commands"
+	"Prison/console"
 	"fmt"
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
@@ -31,18 +32,18 @@ func main() {
 		log.Fatalln(err)
 	}
 	w := server.World()
-	w.SetDefaultGameMode(gamemode.Creative{})
+	w.SetDefaultGameMode(gamemode.Survival{})
 	w.SetSpawn(world.BlockPos{0, 4, 0})
 	w.SetTime(5000)
 	w.StopTime()
+	console.StartConsole()
 	cmd.Register(cmd.New("version", "Allows the user to view the version of the server", []string{"ver", "about"}, commands.Version{}))
 	cmd.Register(cmd.New("help", "Provides helpful infomation out thwre", nil, commands.Help{}))
 	for {
-		p, err := server.Accept()
+		_, err := server.Accept()
 		if err != nil {
 			break
 		}
-		p.SetGameMode(gamemode.Survival{})
 	}
 }
 
