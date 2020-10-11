@@ -14,7 +14,6 @@ func StartConsole() {
 	go func() {
 		time.Sleep(time.Millisecond * 500)
 		source := &Console{}
-		fmt.Println("Unknown command! Type help for commands.")
 		// I don't use fmt.Scan() because the fmt package intentionally filters out whitespaces, this is how it is implemented.
 		scanner := bufio.NewScanner(os.Stdin)
 		for {

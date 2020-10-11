@@ -39,6 +39,7 @@ func main() {
 	console.StartConsole()
 	cmd.Register(cmd.New("version", "Allows the user to view the version of the server", []string{"ver", "about"}, commands.Version{}))
 	cmd.Register(cmd.New("help", "Provides helpful infomation out thwre", nil, commands.Help{}))
+	cmd.Register(cmd.New("gamemode", "Set your own gamemode", []string{"gm"}, commands.Gamemode{}))
 	for {
 		_, err := server.Accept()
 		if err != nil {
