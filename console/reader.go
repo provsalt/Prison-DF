@@ -19,7 +19,7 @@ func StartConsole() {
 		for {
 			if scanner.Scan() {
 				commandString := scanner.Text()
-				if len(commandString) == 0 {
+				if commandString == "" {
 					continue
 				}
 				commandName := strings.Split(commandString, " ")[0]
