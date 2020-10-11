@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Prison/commands"
-	"Prison/console"
+	"Prison/prisons/commands"
+	"Prison/prisons/console"
 	"fmt"
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"

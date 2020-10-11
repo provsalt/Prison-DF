@@ -1,7 +1,8 @@
 package commands
 
 import (
-	"Prison/forms"
+	"Prison/prisons/forms"
+	"Prison/prisons/utils"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/form"
@@ -12,7 +13,8 @@ type Help struct{}
 
 func (h Help) Run(source cmd.Source, output *cmd.Output) {
 	if _, ok := source.(*player.Player); !ok {
-		output.Printf("How'd you forget the commands dumbass")
+		output.Printf(text.ANSI(utils.GetPrefix() + " How'd you forget the commands dumbass"))
+		return
 	}
 
 	p := source.(*player.Player)
