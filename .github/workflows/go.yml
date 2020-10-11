@@ -41,19 +41,19 @@ jobs:
       
     - name: Upload windows artifact
       uses: actions/upload-artifact@v2
-        with:
-          name: prisons.exe
-          path: build/prisons.exe
-          retention-days: 30
+      with:
+        name: prisons.exe
+        path: build/prisons.exe
+        retention-days: 30
     - name: Upload linux artifact
       uses: actions/upload-artifact@v2
-        with:
-          name: prisons-linux
-          path: build/prisons-linux
-          retention-days: 30
+      with:
+        name: prisons-linux
+        path: build/prisons-linux
+        retention-days: 30
     - name: Upload freebsd artifact 
       uses: actions/upload-artifact@v2
-        with:
-          name: prisons-freebsd
-          path: build/prisons-freebsd
-          retention-days: 30
+      with:
+        name: prisons-freebsd
+        path: build/prisons-freebsd
+        retention-days: 30
