@@ -1,4 +1,4 @@
-package forms
+package help
 
 import (
 	"github.com/df-mc/dragonfly/dragonfly/player/form"

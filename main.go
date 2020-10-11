@@ -1,8 +1,10 @@
 package main
 
 import (
-	"Prison/commands"
-	"Prison/console"
+	gamemode2 "Prison/prisons/commands/gamemode"
+	"Prison/prisons/commands/help"
+	"Prison/prisons/commands/version"
+	"Prison/prisons/console"
 	"fmt"
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
@@ -37,9 +39,9 @@ func main() {
 	w.SetTime(5000)
 	w.StopTime()
 	console.StartConsole()
-	cmd.Register(cmd.New("version", "Allows the user to view the version of the server", []string{"ver", "about"}, commands.Version{}))
-	cmd.Register(cmd.New("help", "Provides helpful infomation out thwre", nil, commands.Help{}))
-	cmd.Register(cmd.New("gamemode", "Set your own gamemode", []string{"gm"}, commands.Gamemode{}))
+	cmd.Register(cmd.New("version", "Allows the user to view the version of the server", []string{"ver", "about"}, version.Version{}))
+	cmd.Register(cmd.New("help", "Provides helpful infomation out thwre", nil, help.Help{}))
+	cmd.Register(cmd.New("gamemode", "Set your own gamemode", []string{"gm"}, gamemode2.Gamemode{}))
 	for {
 		_, err := server.Accept()
 		if err != nil {

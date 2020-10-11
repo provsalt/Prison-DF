@@ -1,9 +1,10 @@
-package commands
+package gamemode
 
 import (
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
+	"github.com/sandertv/gophertunnel/minecraft/text"
 	"strings"
 )
 
@@ -12,6 +13,11 @@ type Gamemode struct {
 }
 
 func (g Gamemode) Run(source cmd.Source, output *cmd.Output) {
+	if _, ok := source.(*player.Player); !ok {
+		output.Printf(text.ANSI(text.Red()("You must run this command as a player")))
+		return
+	}
+
 	p := source.(*player.Player)
 	mode := strings.ToLower(g.Gamemode)
 	switch mode {
