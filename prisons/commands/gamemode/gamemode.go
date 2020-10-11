@@ -1,4 +1,4 @@
-package commands
+package gamemode
 
 import (
 	"github.com/df-mc/dragonfly/dragonfly/cmd"

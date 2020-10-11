@@ -1,7 +1,7 @@
-package commands
+package help
 
 import (
-	"Prison/prisons/forms"
+	"Prison/prisons/forms/help"
 	"Prison/prisons/utils"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
@@ -18,7 +18,7 @@ func (h Help) Run(source cmd.Source, output *cmd.Output) {
 	}
 
 	p := source.(*player.Player)
-	f := form.NewMenu(forms.HelpForm{
+	f := form.NewMenu(help.HelpForm{
 		CloseButton: form.Button{Text: "Okay"},
 	}, "test")
 	f = f.WithBody(
