@@ -12,6 +12,10 @@ type Gamemode struct {
 }
 
 func (g Gamemode) Run(source cmd.Source, output *cmd.Output) {
+	if _, ok := source.(*player.Player); !ok {
+		output.Printf("You must run this command as a player")
+	}
+
 	p := source.(*player.Player)
 	mode := strings.ToLower(g.Gamemode)
 	switch mode {

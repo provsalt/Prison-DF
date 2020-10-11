@@ -11,6 +11,10 @@ import (
 type Help struct{}
 
 func (h Help) Run(source cmd.Source, output *cmd.Output) {
+	if _, ok := source.(*player.Player); !ok {
+		output.Printf("How'd you forget the commands dumbass")
+	}
+
 	p := source.(*player.Player)
 	f := form.NewMenu(forms.HelpForm{
 		CloseButton: form.Button{Text: "Okay"},
