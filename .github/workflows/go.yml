@@ -32,22 +32,26 @@ jobs:
 
     - name: Build for Wndows
       run: env GOOS=windows GOARCH=amd64 go build -o build/prisons.exe .
+      
+    - name: Build for Linux
+      run: env GOOS=linux GOARCH=amd64 go build -o build/prisons-linux . 
+      
+    - name: Build for FreeBSD
+      run: env GOOS=freebsd GOARCH=amd64 go build -o build/prisons-freebsd .
+      
+    - name: Upload windows artifact
       uses: actions/upload-artifact@v2
         with:
           name: prisons.exe
           path: build/prisons.exe
           retention-days: 30
-      
-    - name: Build for Linux
-      run: env GOOS=linux GOARCH=amd64 go build -o build/prisons-linux . 
+    - name: Upload linux artifact
       uses: actions/upload-artifact@v2
         with:
           name: prisons-linux
           path: build/prisons-linux
           retention-days: 30
-      
-    - name: Build for FreeBSD
-      run: env GOOS=freebsd GOARCH=amd64 go build -o build/prisons-freebsd .
+    - name: Upload freebsd artifact 
       uses: actions/upload-artifact@v2
         with:
           name: prisons-freebsd
