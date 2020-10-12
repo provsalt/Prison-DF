@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/sandertv/gophertunnel/minecraft/protocol"
-	"github.com/sandertv/gophertunnel/minecraft/text"
 	"os"
 	"strings"
 )
@@ -34,5 +33,5 @@ func (v Version) Run(source cmd.Source, output *cmd.Output) {
 	if err := scanner.Err(); err != nil {
 		panic(err)
 	}
-	output.Printf(text.White()("This server is running Dragonfly for Minecraft: Bedrock Edition v " + protocol.CurrentVersion + " implementing dragonfly version " + dfver[1]))
+	output.Printf("This server is running Dragonfly for Minecraft: Bedrock Edition v " + protocol.CurrentVersion + " implementing dragonfly version " + dfver[1])
 }

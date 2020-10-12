@@ -34,7 +34,7 @@ jobs:
       run: env GOOS=windows GOARCH=amd64 go build -o build/prisons.exe .
       
     - name: Build for Linux
-      run: env GOOS=linux GOARCH=amd64 go build -o build/prisons-linux . 
+      run: env GOOS=linux GOARCH=amd64 go build -o build/prisons-linux .
       
     - name: Build for FreeBSD
       run: env GOOS=freebsd GOARCH=amd64 go build -o build/prisons-freebsd .
