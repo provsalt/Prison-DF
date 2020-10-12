@@ -3,8 +3,8 @@ package main
 import (
 	"Prison/prisons/commands"
 	"Prison/prisons/console"
+	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
-	"Prison/tasks/restart"
 	"fmt"
 	"github.com/bradhe/stopwatch"
 	"github.com/df-mc/dragonfly/dragonfly"
