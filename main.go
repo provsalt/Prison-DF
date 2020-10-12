@@ -53,7 +53,7 @@ func main() {
 	}
 	stop.Server = Server
 	watch.Stop()
-	log.Infof("Done loading server in " + watch.Milliseconds().String())
+	log.Infof("Done loading server in %dms", watch.Milliseconds())
 	for {
 		_, err := Server.Accept()
 		if err != nil {
