@@ -2,8 +2,9 @@ package main
 
 import (
 	"Prison/prisons/commands"
-	"Prison/prisons/commands/stop"
 	"Prison/prisons/console"
+	"Prison/prisons/utils"
+	"Prison/tasks/restart"
 	"fmt"
 	"github.com/bradhe/stopwatch"
 	"github.com/df-mc/dragonfly/dragonfly"
@@ -51,7 +52,9 @@ func main() {
 	if register {
 		log.Info(text.ANSI(text.Green()("Successfully registered commands")))
 	}
-	stop.Server = Server
+	utils.Server = Server
+	utils.Logger = log
+	restart.Restartcheck()
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
 	for {
