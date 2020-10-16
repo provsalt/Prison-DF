@@ -8,6 +8,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 )
 
+// Register ...
 func Register() bool {
 	cmd.Register(cmd.New("version", "Allows the user to view the version of the server", []string{"ver", "about"}, version.Version{}))
 	cmd.Register(cmd.New("help", "Provides helpful infomation out thwre", nil, help.Help{}))

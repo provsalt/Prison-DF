@@ -27,7 +27,7 @@ func StartConsole() {
 
 				if !ok {
 					output := &cmd.Output{}
-					output.Errorf("Unknown command name '%v'", commandName)
+					output.Errorf("Unknown command %v. Try /help for a list of commands", commandName)
 					for _, e := range output.Errors() {
 						fmt.Println(e)
 					}

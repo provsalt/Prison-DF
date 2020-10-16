@@ -15,6 +15,11 @@ func Schedulerepeatingtask(what func(), delay time.Duration) chan bool {
 			}
 		}
 	}()
-
 	return stop
+}
+
+func Scheduletask(what func()) {
+	go func() {
+		what()
+	}()
 }

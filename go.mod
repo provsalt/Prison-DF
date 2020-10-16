@@ -4,8 +4,7 @@ go 1.13
 
 require (
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
-	github.com/davecgh/go-spew v1.1.1
-	github.com/df-mc/dragonfly v0.0.4-0.20201006134936-4af054d06cdc
+	github.com/df-mc/dragonfly v0.0.4-0.20201016130728-14a3049b0f37
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/pelletier/go-toml v1.8.1
 	github.com/sandertv/gophertunnel v1.7.12
