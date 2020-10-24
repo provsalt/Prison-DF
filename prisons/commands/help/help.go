@@ -1,7 +1,7 @@
 package help
 
 import (
-	"Prison/prisons/forms/help"
+	"Prison/prisons/PlayerQuit/help"
 	"Prison/prisons/utils"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
