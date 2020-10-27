@@ -8,6 +8,7 @@ import (
 	"Prison/prisons/utils"
 	"fmt"
 	"github.com/bradhe/stopwatch"
+	_ "github.com/davecgh/go-spew/spew"
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
@@ -16,6 +17,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
 	"github.com/pelletier/go-toml"
+	Economy "github.com/saltcraft/economy"
 	"github.com/sandertv/gophertunnel/minecraft"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
@@ -49,40 +51,53 @@ func main() {
 	if err := Server.Start(); err != nil {
 		log.Fatalln(err)
 	}
+	log.Infof(text.ANSI(text.Green()("Starting world")))
 	w := Server.World()
 	w.SetDefaultGameMode(gamemode.Survival{})
 	w.SetSpawn(world.BlockPos{0, 4, 0})
 	w.SetTime(5000)
 	w.StopTime()
+
 	console.StartConsole()
+
 	log.Infof(text.ANSI(text.Green()("Registering commands")))
 	register := commands.Register()
 	if register {
 		log.Info(text.ANSI(text.Green()("Successfully registered commands")))
 	}
+
 	utils.Server = Server
 	utils.Logger = log
+
 	log.Infof(text.ANSI(text.Green()("Registering tasks")))
+
 	restart.Restartcheck()
+
 	log.Infof(text.ANSI(text.Green()("Registered tasks")))
+
+	_, err = Economy.New(Server, ".", "u1740_NjmWr0Scim:2dzmbtqc=pIw3^7dNrs.j3S=@(140.82.11.202)/s1740_test")
+
+	if err != nil {
+		log.Panic(err)
+	}
+
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
 	for {
 		p, err := Server.Accept()
 		if err != nil {
 			break
-		} else {
-			p.Handle(events.NewPlayerQuitHandler(p))
-			t := title.New(utils.GetPrefix())
-			t = t.WithSubtitle(text.Aqua()("Season 1"))
-			time.AfterFunc(time.Second*3, func() {
-				session_writePacket(player_session(p), &packet.ActorEvent{
-					EventType:       packet.ActorEventElderGuardianCurse,
-					EntityRuntimeID: 1,
-				})
-				p.SendTitle(t.WithDuration(time.Second * 5))
-			})
 		}
+		p.Handle(events.NewPlayerQuitHandler(p))
+		t := title.New(utils.GetPrefix())
+		t = t.WithSubtitle(text.Aqua()("Season 1"))
+		time.AfterFunc(time.Second*3, func() {
+			session_writePacket(player_session(p), &packet.ActorEvent{
+				EventType:       packet.ActorEventElderGuardianCurse,
+				EntityRuntimeID: 1,
+			})
+			p.SendTitle(t.WithDuration(time.Second * 7))
+		})
 	}
 }
 
