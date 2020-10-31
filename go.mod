@@ -5,15 +5,15 @@ go 1.13
 require (
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
 	github.com/davecgh/go-spew v1.1.1
-	github.com/df-mc/dragonfly v0.0.4-0.20201022212410-f1f5c222c809
+	github.com/df-mc/dragonfly v0.0.4-0.20201030093037-8a7fb4fc71d3
 	github.com/emperials/df-worldmanager v0.0.0-20201020161648-5a30086bda10
+	github.com/go-gl/mathgl v1.0.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/pelletier/go-toml v1.8.1
 	github.com/saltcraft/economy v0.0.0-20201027124305-1e0e281ac4a2
-	github.com/sandertv/go-raknet v1.7.21 // indirect
-	github.com/sandertv/gophertunnel v1.7.14-0.20201022170836-ad9f2952197e
+	github.com/sandertv/gophertunnel v1.7.14-0.20201030100251-7c83047eed98
 	github.com/sirupsen/logrus v1.7.0
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
 	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect

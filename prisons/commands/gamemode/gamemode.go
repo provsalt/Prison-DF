@@ -14,7 +14,7 @@ type Gamemode struct {
 
 func (g Gamemode) Run(source cmd.Source, output *cmd.Output) {
 	if _, ok := source.(*player.Player); !ok {
-		output.Printf(text.ANSI(text.Red()("You must run this command as a player")))
+		output.Printf(text.ANSI(text.Colourf("<red>You must run this command as a player</red>")))
 		return
 	}
 

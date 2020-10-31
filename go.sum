@@ -56,6 +56,8 @@ github.com/df-mc/dragonfly v0.0.4-0.20201017165647-aa4fe284fa40 h1:nG4DuCNpGJCmP
 github.com/df-mc/dragonfly v0.0.4-0.20201017165647-aa4fe284fa40/go.mod h1:98gVkujDYmYyctBUADm2qRte2pUBiI866Q7D8ufu06Q=
 github.com/df-mc/dragonfly v0.0.4-0.20201022212410-f1f5c222c809 h1:XVpFi4KZ3RB/7JaCd/anfWJDwatx0op1Wnm2zloYy0k=
 github.com/df-mc/dragonfly v0.0.4-0.20201022212410-f1f5c222c809/go.mod h1:98gVkujDYmYyctBUADm2qRte2pUBiI866Q7D8ufu06Q=
+github.com/df-mc/dragonfly v0.0.4-0.20201030093037-8a7fb4fc71d3 h1:HLpCGHUxgm2QCFVG1oiq0Y88PmfcvRZ47sEjBMxZOwc=
+github.com/df-mc/dragonfly v0.0.4-0.20201030093037-8a7fb4fc71d3/go.mod h1:aRyiKVShHTWx+Nxwjq8QQ/GezVu9Mh1PH6ngrU5eKVA=
 github.com/df-mc/goleveldb v1.1.8 h1:XPzH9rlh8GvcKQOvnidbhx7uDIZ91l4q+t886ju5z1w=
 github.com/df-mc/goleveldb v1.1.8/go.mod h1:t9l/GXXTQ3Z5oBELqye1p0ItbGHN/vyNZeWBYfkXkSM=
 github.com/emperials/df-worldmanager v0.0.0-20201020161648-5a30086bda10 h1:Q0hLJt++Kwm3OVdJ+1plEfkRHTO3tMxh0fybWNotJkU=
@@ -188,11 +190,16 @@ github.com/sandertv/go-raknet v1.7.19 h1:FPOUJz8yROzOifudqu5EhmOKjoio5DtRiWZn2BR
 github.com/sandertv/go-raknet v1.7.19/go.mod h1:s1lD7LTts74R9csTeI4WlGcp6PmXAGX+DeJlQF3KMlg=
 github.com/sandertv/go-raknet v1.7.21 h1:HQB+094Y4KzYXuw7aM/KtW7p0ohN4gzIb3e1tz+i2BQ=
 github.com/sandertv/go-raknet v1.7.21/go.mod h1:s1lD7LTts74R9csTeI4WlGcp6PmXAGX+DeJlQF3KMlg=
+github.com/sandertv/go-raknet v1.7.22 h1:Kaoss0wSBX/r/CvW0UYeI3Pj/tYfTCkBwnfQGt4xwoc=
+github.com/sandertv/go-raknet v1.7.22/go.mod h1:s1lD7LTts74R9csTeI4WlGcp6PmXAGX+DeJlQF3KMlg=
 github.com/sandertv/gophertunnel v1.7.12 h1:wThxPsWSLgUS6myUWnf4Q2HA13lEBspfn2wnvsvwdu4=
 github.com/sandertv/gophertunnel v1.7.12/go.mod h1:kpFO99NEFB7GhmQlDvnJ+ykho4U7WgG9Spod8BZxVKw=
 github.com/sandertv/gophertunnel v1.7.13/go.mod h1:0MT2r/l7s8qskYxcm0Tbp8VCEj2TbjdxI80hRFaoBVo=
 github.com/sandertv/gophertunnel v1.7.14-0.20201022170836-ad9f2952197e h1:Z6zvg50v6zdAIeIYcyxSoMbHTuSxyYgpP2cA2h5xi74=
 github.com/sandertv/gophertunnel v1.7.14-0.20201022170836-ad9f2952197e/go.mod h1:/WqCkVJQ3IEgik1592h4voEtBVRmSYEcQj18G0z501o=
+github.com/sandertv/gophertunnel v1.7.14-0.20201029141104-b31d287e0213/go.mod h1:LJvnnzrVVEI1QNRThSRxVkKss7uz9zKw6qDaylgYQCo=
+github.com/sandertv/gophertunnel v1.7.14-0.20201030100251-7c83047eed98 h1:7xDQMsgyT1SWQKK+RdVlRLz6PZcVZaSRpxOS1S5bmxQ=
+github.com/sandertv/gophertunnel v1.7.14-0.20201030100251-7c83047eed98/go.mod h1:LJvnnzrVVEI1QNRThSRxVkKss7uz9zKw6qDaylgYQCo=
 github.com/sirupsen/logrus v1.4.2/go.mod h1:tLMulIdttU9McNUspp0xgXVQah82FyeX6MwdIuYE2rE=
 github.com/sirupsen/logrus v1.6.0 h1:UBcNElsrwanuuMsnGSlYmtmgbb23qDR5dG+6X6Oo89I=
 github.com/sirupsen/logrus v1.6.0/go.mod h1:7uNnSEd1DgxDLC74fIahvMZmmYsHGZGEOFrfsX/uA88=
@@ -227,6 +234,7 @@ golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACk
 golang.org/x/crypto v0.0.0-20190510104115-cbcb75029529/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
 golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
 golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
+golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 h1:psW17arqaxU48Z5kZ0CQnkZWQJsqcURM6tKiBApRjXI=
 golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
 golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
@@ -487,6 +495,8 @@ gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod h1:Co6ibVJAznAaIkqp8
 gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
 gopkg.in/fsnotify.v1 v1.4.7 h1:xOHLXZwVvI9hhs+cLKq5+I5onOuwQLhQwiu63xxlHs4=
 gopkg.in/fsnotify.v1 v1.4.7/go.mod h1:Tz8NjZHkW78fSQdbUxIjBTcgA1z1m8ZHf0WmKUhAMys=
+gopkg.in/square/go-jose.v2 v2.5.1 h1:7odma5RETjNHWJnR32wx8t+Io4djHE1PqxCFx3iiZ2w=
+gopkg.in/square/go-jose.v2 v2.5.1/go.mod h1:M9dMgbHiYLoDGQrXy7OpJDJWiKiU//h+vD76mk0e1AI=
 gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 h1:uRGJdciOHaEIrze2W8Q3AKkepLTh2hOroT7a+7czfdQ=
 gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7/go.mod h1:dt/ZhP58zS4L8KSrWDmTeBkI65Dw0HsyUHuEVlX15mw=
 gopkg.in/yaml.v2 v2.2.1/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=

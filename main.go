@@ -4,7 +4,6 @@ import (
 	"Prison/prisons/commands"
 	"Prison/prisons/console"
 	"Prison/prisons/events"
-	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
 	"fmt"
 	"github.com/bradhe/stopwatch"
@@ -51,7 +50,7 @@ func main() {
 	if err := Server.Start(); err != nil {
 		log.Fatalln(err)
 	}
-	log.Infof(text.ANSI(text.Green()("Starting world")))
+	log.Infof(text.ANSI(text.Colourf("<green>Starting world</green>")))
 	w := Server.World()
 	w.SetDefaultGameMode(gamemode.Survival{})
 	w.SetSpawn(world.BlockPos{0, 4, 0})
@@ -60,20 +59,17 @@ func main() {
 
 	console.StartConsole()
 
-	log.Infof(text.ANSI(text.Green()("Registering commands")))
+	log.Infof(text.ANSI(text.Colourf("<green>Registering commands</green?")))
 	register := commands.Register()
 	if register {
-		log.Info(text.ANSI(text.Green()("Successfully registered commands")))
+		log.Info(text.ANSI(text.Colourf("<green>Successfully registered commands</green>")))
 	}
 
 	utils.Server = Server
 	utils.Logger = log
 
-	log.Infof(text.ANSI(text.Green()("Registering tasks")))
-
-	restart.Restartcheck()
-
-	log.Infof(text.ANSI(text.Green()("Registered tasks")))
+	log.Infof(text.ANSI(text.Colourf("<green>Registering tasks</green>")))
+	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
 
 	_, err = Economy.New(Server, ".", "u1740_NjmWr0Scim:2dzmbtqc=pIw3^7dNrs.j3S=@(140.82.11.202)/s1740_test")
 
@@ -90,7 +86,7 @@ func main() {
 		}
 		p.Handle(events.NewPlayerQuitHandler(p))
 		t := title.New(utils.GetPrefix())
-		t = t.WithSubtitle(text.Aqua()("Season 1"))
+		t = t.WithSubtitle(text.Colourf("<aqua?Season </aqua>"))
 		time.AfterFunc(time.Second*3, func() {
 			session_writePacket(player_session(p), &packet.ActorEvent{
 				EventType:       packet.ActorEventElderGuardianCurse,

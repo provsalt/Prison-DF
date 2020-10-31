@@ -12,7 +12,7 @@ var Server *dragonfly.Server
 var Logger *logrus.Logger
 
 func GetPrefix() string {
-	return text.Bold()(text.Green()("Salt") + text.Yellow()("Craft"))
+	return text.Colourf("<b><green>Salt</green><yellow>Craft</yellow></b>")
 }
 
 func Colorize(message string) string {

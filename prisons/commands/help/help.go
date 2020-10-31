@@ -22,12 +22,10 @@ func (h Help) Run(source cmd.Source, output *cmd.Output) {
 		CloseButton: form.Button{Text: "Okay"},
 	}, "test")
 	f = f.WithBody(
-		text.Yellow()("==========") + text.Green()(" Help ") + text.Yellow()("==========\n") +
-			text.Green()("/rankup &brank up to the next mine"+
-				"\n"+
-				"/mine [Mine A-Z] &bTeleport you to your mine"+
-				"\n"+
-				"/mymoney &bChecks your money"),
+		text.Colourf("<yellow>==========</yellow><green>Help</green><yellow>==========</yellow>\n" +
+			"<green>/rankup <aqua>brank up to the next mine</aqua>\n" +
+			"/mine [Mine A-Z] <aqua>Teleport you to your mine</aqua>\n " +
+			"/mymoney <aqua>Checks your money</aqua></green>"),
 	)
 	p.SendForm(f)
 }
