@@ -92,7 +92,7 @@ func main() {
 				EventType:       packet.ActorEventElderGuardianCurse,
 				EntityRuntimeID: 1,
 			})
-			p.SendTitle(t.WithDuration(time.Second * 7))
+			p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
 		})
 	}
 }

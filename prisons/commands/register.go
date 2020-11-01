@@ -5,6 +5,7 @@ import (
 	"Prison/prisons/commands/help"
 	"Prison/prisons/commands/stop"
 	"Prison/prisons/commands/version"
+	"Prison/prisons/commands/voting"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 )
 
@@ -14,5 +15,6 @@ func Register() bool {
 	cmd.Register(cmd.New("help", "Provides helpful infomation out thwre", nil, help.Help{}))
 	cmd.Register(cmd.New("gamemode", "Set your own gamemode", []string{"gm"}, gamemode2.Gamemode{}))
 	cmd.Register(cmd.New("stop", "Stops the server", nil, stop.Stop{}))
+	cmd.Register(cmd.New("vote", "aa", nil, voting.Vote{}))
 	return true
 }
