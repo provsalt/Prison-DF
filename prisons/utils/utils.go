@@ -8,6 +8,7 @@ import (
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
 	"regexp"
+	_ "unsafe"
 )
 
 var Server *dragonfly.Server

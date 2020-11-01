@@ -21,7 +21,6 @@ import (
 	"io/ioutil"
 	"os"
 	"time"
-	_ "unsafe"
 )
 
 func main() {
