@@ -11,7 +11,6 @@ require (
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/pelletier/go-toml v1.8.1
-	github.com/saltcraft/economy v0.0.0-20201027124305-1e0e281ac4a2
 	github.com/sandertv/gophertunnel v1.7.14-0.20201030100251-7c83047eed98
 	github.com/sirupsen/logrus v1.7.0
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816

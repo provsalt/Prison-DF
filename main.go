@@ -14,7 +14,6 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
 	"github.com/pelletier/go-toml"
-	Economy "github.com/saltcraft/economy"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
@@ -68,8 +67,6 @@ func main() {
 	log.Infof(text.ANSI(text.Colourf("<green>Registering tasks</green>")))
 	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
 
-	_, err = Economy.New(Server, ".", "u1740_NjmWr0Scim:2dzmbtqc=pIw3^7dNrs.j3S=@(140.82.11.202)/s1740_test")
-
 	if err != nil {
 		log.Panic(err)
 	}
@@ -83,7 +80,7 @@ func main() {
 		}
 		p.Handle(events.NewPlayerQuitHandler(p))
 		t := title.New(utils.GetPrefix())
-		t = t.WithSubtitle(text.Colourf("<aqua?Season </aqua>"))
+		t = t.WithSubtitle(text.Colourf("<aqua>Season </aqua>"))
 		time.AfterFunc(time.Second*3, func() {
 			utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
 				EventType:       packet.ActorEventElderGuardianCurse,
