@@ -9,15 +9,12 @@ import (
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
 	"github.com/df-mc/dragonfly/dragonfly"
-	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
 	"github.com/df-mc/dragonfly/dragonfly/player/title"
-	"github.com/df-mc/dragonfly/dragonfly/session"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
 	"github.com/pelletier/go-toml"
 	Economy "github.com/saltcraft/economy"
-	"github.com/sandertv/gophertunnel/minecraft"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
@@ -88,7 +85,7 @@ func main() {
 		t := title.New(utils.GetPrefix())
 		t = t.WithSubtitle(text.Colourf("<aqua?Season </aqua>"))
 		time.AfterFunc(time.Second*3, func() {
-			session_writePacket(player_session(p), &packet.ActorEvent{
+			utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
 				EventType:       packet.ActorEventElderGuardianCurse,
 				EntityRuntimeID: 1,
 			})
@@ -119,15 +116,3 @@ func ReadConfig() (dragonfly.Config, error) {
 	}
 	return c, nil
 }
-
-//go:linkname player_session github.com/df-mc/dragonfly/dragonfly/player.(*Player).session
-//noinspection ALL
-func player_session(*player.Player) *session.Session
-
-//go:linkname session_connection github.com/df-mc/dragonfly/dragonfly/session.(*Session).connection
-//noinspection ALL
-func session_connection(*session.Session) *minecraft.Conn
-
-//go:linkname session_writePacket github.com/df-mc/dragonfly/dragonfly/session.(*Session).writePacket
-//noinspection ALL
-func session_writePacket(*session.Session, packet.Packet)
