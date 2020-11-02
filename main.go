@@ -77,6 +77,9 @@ func main() {
 		if err != nil {
 			break
 		}
+		go func() {
+
+		}()
 		p.Handle(events.NewPlayerQuitHandler(p))
 		t := title.New(utils.GetPrefix())
 		t = t.WithSubtitle(text.Colourf("<aqua>Season </aqua>"))

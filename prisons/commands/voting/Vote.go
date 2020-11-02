@@ -62,6 +62,6 @@ func CheckVote(player *player.Player) (error, string) {
 func Success(player *player.Player) {
 	t := title.New(text.Colourf("<green>Vote successful!</green>"))
 	t = t.WithFadeOutDuration(time.Second * 3)
-	t = t.WithSubtitle(text.Colourf("<aqua>Thank you for your support </aqua> <b><red><3</red></b>"))
+	t = t.WithSubtitle(text.Colourf("<aqua>Thank you! </aqua><b><red><3</red></b>"))
 	player.SendTitle(t)
 }

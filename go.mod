@@ -3,6 +3,7 @@ module Prison
 go 1.13
 
 require (
+	github.com/J-M1/Go-DiscordWebhook v0.0.0-20200326112917-5caad9ff362b // indirect
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
 	github.com/davecgh/go-spew v1.1.1
 	github.com/df-mc/dragonfly v0.0.4-0.20201101091126-276e9ce5053a
