@@ -72,12 +72,15 @@ func main() {
 
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
+
 	for {
 		p, err := Server.Accept()
 		if err != nil {
 			break
 		}
+
 		p.Handle(events.NewPlayerQuitHandler(p))
+		p.ShowCoordinates()
 		t := title.New(utils.GetPrefix())
 		t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
 		time.AfterFunc(time.Second*3, func() {
