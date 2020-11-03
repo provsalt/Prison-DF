@@ -4,6 +4,8 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/session"
+	"github.com/go-gl/mathgl/mgl32"
+	"github.com/go-gl/mathgl/mgl64"
 	"github.com/sandertv/gophertunnel/minecraft"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
@@ -25,6 +27,10 @@ func GetServer() *dragonfly.Server {
 
 func GetLogger() *logrus.Logger {
 	return Logger
+}
+
+func Vec64To32(vec3 mgl64.Vec3) mgl32.Vec3 {
+	return mgl32.Vec3{float32(vec3[0]), float32(vec3[1]), float32(vec3[2])}
 }
 
 //go:linkname Player_session github.com/df-mc/dragonfly/dragonfly/player.(*Player).session

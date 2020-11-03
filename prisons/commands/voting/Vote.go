@@ -6,6 +6,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/title"
 	"github.com/go-resty/resty/v2"
+	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"time"
 )
@@ -64,4 +65,14 @@ func Success(player *player.Player) {
 	t = t.WithFadeOutDuration(time.Second * 3)
 	t = t.WithSubtitle(text.Colourf("<aqua>Thank you! </aqua><b><red><3</red></b>"))
 	player.SendTitle(t)
+	utils.Session_writePacket(utils.Player_session(player), &packet.PlaySound{
+		SoundName: "random.totem",
+		Position:  utils.Vec64To32(player.Position()),
+		Volume:    0.2,
+		Pitch:     1,
+	})
+	utils.Session_writePacket(utils.Player_session(player), &packet.ActorEvent{
+		EntityRuntimeID: 1,
+		EventType:       packet.ActorEventConsumeToken,
+	})
 }

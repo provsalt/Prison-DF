@@ -77,12 +77,9 @@ func main() {
 		if err != nil {
 			break
 		}
-		go func() {
-
-		}()
 		p.Handle(events.NewPlayerQuitHandler(p))
 		t := title.New(utils.GetPrefix())
-		t = t.WithSubtitle(text.Colourf("<aqua>Season </aqua>"))
+		t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
 		time.AfterFunc(time.Second*3, func() {
 			utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
 				EventType:       packet.ActorEventElderGuardianCurse,

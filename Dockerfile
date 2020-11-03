@@ -1,11 +1,15 @@
-FROM golang:latest
+FROM golang
 
-WORKDIR /go/src/prisons
-COPY . .
+RUN mkdir /server
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+COPY . /server
 
-EXPOSE 19132
+WORKDIR /server
 
-CMD ["build -v ."]
+RUN go build -o prisons .
+
+RUN chmod +x prisons
+
+EXPOSE 19132/udp
+
+CMD [ "/server/prisons" ]
