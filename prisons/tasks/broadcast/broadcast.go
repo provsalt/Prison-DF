@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const broadcastprefix = "<grey>[<green><b!</b></green>]</grey> "
+const broadcastprefix = "<grey>[<green><b>!</b></green>]</grey> "
 
 var Messages = [...]string{
 	text.Colourf(broadcastprefix + "Join our discord today at discord.saltcraft.xyz\n"),
