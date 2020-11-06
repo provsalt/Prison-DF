@@ -4,6 +4,7 @@ import (
 	"Prison/prisons/commands"
 	"Prison/prisons/console"
 	"Prison/prisons/events"
+	"Prison/prisons/tasks/broadcast"
 	"Prison/prisons/utils"
 	"fmt"
 	"github.com/bradhe/stopwatch"
@@ -13,17 +14,22 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/player/title"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
+	worldmanager "github.com/emperials/df-worldmanager"
 	"github.com/pelletier/go-toml"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
 	easy "github.com/t-tomalak/logrus-easy-formatter"
 	"io/ioutil"
+	_ "net/http/pprof"
 	"os"
+	"runtime"
 	"time"
 )
 
 func main() {
+	runtime.GOMAXPROCS(3)
+	fmt.Println(runtime.GOMAXPROCS(0))
 	log := &logrus.Logger{
 		Out:   os.Stderr,
 		Level: logrus.DebugLevel,
@@ -52,6 +58,15 @@ func main() {
 	w.SetTime(5000)
 	w.StopTime()
 
+	dir, _ := os.Getwd()
+	manager := worldmanager.New(Server, dir, log)
+
+	err = manager.LoadWorld("worlds/mine_a", "mine_a", 4)
+
+	if err != nil {
+		panic(err)
+	}
+
 	console.StartConsole()
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering commands</green?")))
@@ -62,13 +77,11 @@ func main() {
 
 	utils.Server = Server
 	utils.Logger = log
+	utils.Worldmanager = manager
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering tasks</green>")))
+	go broadcast.New()
 	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
-
-	if err != nil {
-		log.Panic(err)
-	}
 
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
@@ -78,7 +91,6 @@ func main() {
 		if err != nil {
 			break
 		}
-
 		p.Handle(events.NewPlayerQuitHandler(p))
 		p.ShowCoordinates()
 		t := title.New(utils.GetPrefix())
@@ -90,6 +102,15 @@ func main() {
 			})
 			p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
 		})
+		p.SetGameMode(gamemode.Creative{})
+		ws, _ := manager.World("mine_a")
+		ws.AddEntity(p)
+		p.Teleport(ws.Spawn().Vec3Middle())
+	}
+	err = manager.Close()
+
+	if err != nil {
+		panic(err)
 	}
 }
 

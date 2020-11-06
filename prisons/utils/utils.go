@@ -4,6 +4,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/session"
+	worldmanager2 "github.com/emperials/df-worldmanager"
 	"github.com/go-gl/mathgl/mgl32"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/sandertv/gophertunnel/minecraft"
@@ -16,6 +17,8 @@ import (
 var Server *dragonfly.Server
 
 var Logger *logrus.Logger
+
+var Worldmanager *worldmanager2.WorldManager
 
 func GetPrefix() string {
 	return text.Colourf("<b><green>Salt</green><yellow>Craft</yellow></b>")
@@ -31,6 +34,10 @@ func GetLogger() *logrus.Logger {
 
 func Vec64To32(vec3 mgl64.Vec3) mgl32.Vec3 {
 	return mgl32.Vec3{float32(vec3[0]), float32(vec3[1]), float32(vec3[2])}
+}
+
+func GetWorldmanager() *worldmanager2.WorldManager {
+	return Worldmanager
 }
 
 //go:linkname Player_session github.com/df-mc/dragonfly/dragonfly/player.(*Player).session

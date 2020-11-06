@@ -7,6 +7,7 @@ import (
 	"Prison/prisons/commands/stop"
 	"Prison/prisons/commands/version"
 	"Prison/prisons/commands/voting"
+	"Prison/prisons/commands/world"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 )
 
@@ -18,6 +19,7 @@ func Register() bool {
 	cmd.Register(cmd.New("stop", "Stops the server", nil, stop.Stop{}))
 	cmd.Register(cmd.New("vote", "Vote for the server", nil, voting.Vote{}))
 	cmd.Register(cmd.New("say", "Broadcast your message", nil, say.Say{}))
+	cmd.Register(cmd.New("world", "Manage worlds", nil, world.Teleport{}))
 
 	return true
 }

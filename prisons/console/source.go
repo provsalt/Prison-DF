@@ -15,7 +15,7 @@ func (c Console) Name() string {
 }
 
 func (c Console) Position() mgl64.Vec3 {
-	return [3]float64{0, 0, 0}
+	return [3]float64{}
 }
 
 func (c Console) World() *world.World {
