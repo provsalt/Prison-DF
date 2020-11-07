@@ -9,7 +9,6 @@ import (
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/sandertv/gophertunnel/minecraft"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
-	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
 	_ "unsafe"
 )
@@ -19,10 +18,6 @@ var Server *dragonfly.Server
 var Logger *logrus.Logger
 
 var Worldmanager *worldmanager2.WorldManager
-
-func GetPrefix() string {
-	return text.Colourf("<b><green>Salt</green><yellow>Craft</yellow></b>")
-}
 
 func GetServer() *dragonfly.Server {
 	return Server

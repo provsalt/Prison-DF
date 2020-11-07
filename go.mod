@@ -14,7 +14,9 @@ require (
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/klauspost/compress v1.11.2 // indirect
+	github.com/nakabonne/gosivy v0.1.0 // indirect
 	github.com/pelletier/go-toml v1.8.1
+	github.com/robfig/cron/v3 v3.0.0 // indirect
 	github.com/sandertv/go-raknet v1.7.23 // indirect
 	github.com/sandertv/gophertunnel v1.7.14-0.20201030100251-7c83047eed98
 	github.com/sirupsen/logrus v1.7.0
@@ -22,7 +24,7 @@ require (
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897 // indirect
 	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect
 	golang.org/x/net v0.0.0-20201031054903-ff519b6c9102 // indirect
-	golang.org/x/sys v0.0.0-20201101102859-da207088b7d1 // indirect
+	golang.org/x/sys v0.0.0-20201106081118-db71ae66460a // indirect
 	golang.org/x/text v0.3.4 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect

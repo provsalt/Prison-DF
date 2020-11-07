@@ -5,6 +5,7 @@ import (
 	"Prison/prisons/console"
 	"Prison/prisons/events"
 	"Prison/prisons/tasks/broadcast"
+	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
 	"fmt"
 	"github.com/bradhe/stopwatch"
@@ -23,13 +24,10 @@ import (
 	"io/ioutil"
 	_ "net/http/pprof"
 	"os"
-	"runtime"
 	"time"
 )
 
 func main() {
-	runtime.GOMAXPROCS(3)
-	fmt.Println(runtime.GOMAXPROCS(0))
 	log := &logrus.Logger{
 		Out:   os.Stderr,
 		Level: logrus.DebugLevel,
@@ -81,6 +79,11 @@ func main() {
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering tasks</green>")))
 	go broadcast.New()
+	go func() {
+		for range time.Tick(time.Minute) {
+			restart.New()
+		}
+	}()
 	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
 
 	watch.Stop()

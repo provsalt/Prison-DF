@@ -2,7 +2,7 @@ package tasks
 
 import "time"
 
-func Schedulerepeatingtask(what func()) chan bool {
+func RepeatingTask(what func(), delay time.Duration) chan bool {
 	stop := make(chan bool)
 
 	go func() {
@@ -15,11 +15,6 @@ func Schedulerepeatingtask(what func()) chan bool {
 			}
 		}
 	}()
-	return stop
-}
 
-func Scheduletask(what func()) {
-	go func() {
-		what()
-	}()
+	return stop
 }
