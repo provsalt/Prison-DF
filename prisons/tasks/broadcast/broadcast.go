@@ -15,15 +15,13 @@ var Messages = [...]string{
 	text.Colourf(utils.Broadcastprefix + "Check dragonfly out, our server software at github.com/df-mc/dragonfly\n"),
 	text.Colourf(utils.Broadcastprefix + "Subscribe to provsalt on <red>youtube</red>\n"),
 	text.Colourf(utils.Broadcastprefix + "Check out our store at store.saltcraft.xyz\n"),
+	text.Colourf(utils.Broadcastprefix + "Rebirths are an essential part of the game /rebirth for more info!"),
+	text.Colourf(utils.Broadcastprefix + "/help is a great place to start"),
 }
 
 func New() {
 	for _, message := range Messages {
-		time.Sleep(time.Minute * 6)
-		chat.Global.Printf(message)
-	}
-	for _, message := range Messages {
-		time.Sleep(time.Minute * 6)
+		time.Sleep(time.Minute * 8)
 		chat.Global.Printf(message)
 	}
 }

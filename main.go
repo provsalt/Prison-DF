@@ -3,7 +3,7 @@ package main
 import (
 	"Prison/prisons/commands"
 	"Prison/prisons/console"
-	"Prison/prisons/events"
+	"Prison/prisons/handlers"
 	"Prison/prisons/tasks/broadcast"
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
@@ -16,12 +16,14 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
 	worldmanager "github.com/emperials/df-worldmanager"
+	"github.com/nakabonne/gosivy/agent"
 	"github.com/pelletier/go-toml"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
 	easy "github.com/t-tomalak/logrus-easy-formatter"
 	"io/ioutil"
+	"net/http"
 	_ "net/http/pprof"
 	"os"
 	"time"
@@ -45,6 +47,13 @@ func main() {
 	}
 	watch := stopwatch.Start()
 	Server := dragonfly.New(&config, log)
+	if err := agent.Listen(agent.Options{}); err != nil {
+		log.Fatal(err)
+	}
+	defer agent.Close()
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 	Server.CloseOnProgramEnd()
 	if err := Server.Start(); err != nil {
 		log.Fatalln(err)
@@ -94,7 +103,7 @@ func main() {
 		if err != nil {
 			break
 		}
-		p.Handle(events.NewPlayerQuitHandler(p))
+		p.Handle(handlers.NewSpawmHandler(p))
 		p.ShowCoordinates()
 		t := title.New(utils.GetPrefix())
 		t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
