@@ -4,6 +4,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/entity"
 	"github.com/df-mc/dragonfly/dragonfly/event"
 	"github.com/df-mc/dragonfly/dragonfly/player"
+	"github.com/df-mc/dragonfly/dragonfly/world"
 	"sync"
 )
 
@@ -28,5 +29,15 @@ func (handler SpawnHandler) HandleQuit() {
 }
 
 func (handler SpawnHandler) HandleItemDrop(event *event.Context, item *entity.Item) {
+	event.Continue(func() {
+		if item.World().Name() == "spawn" {
+			event.Cancel()
+		}
+	})
+}
 
+func (handler SpawnHandler) HandleAttackEntity(event *event.Context, entity world.Entity) {
+	if _, ok := entity.(*player.Player); ok {
+		event.Cancel()
+	}
 }

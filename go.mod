@@ -5,19 +5,19 @@ go 1.13
 require (
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
 	github.com/davecgh/go-spew v1.1.1
-	github.com/df-mc/dragonfly v0.0.4-0.20201103181129-ca65c4650665
-	github.com/df-mc/schematic v1.1.3
+	github.com/df-mc/dragonfly v0.0.4-0.20201110155612-7acf341f03cf
+	github.com/df-mc/schematic v1.1.3 // indirect
 	github.com/emperials/df-worldmanager v0.0.0-20201104162122-0a35691b0a27
 	github.com/go-gl/mathgl v1.0.0
 	github.com/go-resty/resty/v2 v2.3.0
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/klauspost/compress v1.11.2 // indirect
 	github.com/nakabonne/gosivy v0.1.0
 	github.com/pelletier/go-toml v1.8.1
 	github.com/robfig/cron/v3 v3.0.0 // indirect
-	github.com/sandertv/go-raknet v1.7.23 // indirect
-	github.com/sandertv/gophertunnel v1.7.14-0.20201030100251-7c83047eed98
+	github.com/sandertv/gophertunnel v1.7.14-0.20201110155201-42f87e7bd9c0
 	github.com/sirupsen/logrus v1.7.0
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897 // indirect

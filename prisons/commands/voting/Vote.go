@@ -73,6 +73,6 @@ func Success(player *player.Player) {
 	})
 	utils.Session_writePacket(utils.Player_session(player), &packet.ActorEvent{
 		EntityRuntimeID: 1,
-		EventType:       packet.ActorEventConsumeToken,
+		EventType:       packet.ActorEventConsumeTotem,
 	})
 }

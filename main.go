@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Prison/economy"
 	"Prison/prisons/commands"
 	"Prison/prisons/console"
 	"Prison/prisons/handlers"
@@ -11,6 +12,7 @@ import (
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
 	"github.com/df-mc/dragonfly/dragonfly"
+	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
 	"github.com/df-mc/dragonfly/dragonfly/player/title"
 	"github.com/df-mc/dragonfly/dragonfly/world"
@@ -82,9 +84,17 @@ func main() {
 		log.Info(text.ANSI(text.Colourf("<green>Successfully registered commands</green>")))
 	}
 
+	e := economy.New(economy.Connection{
+		Username: "u1990_9jqSt4O0ET",
+		Password: "2z^lICvFF86g^sW5Lcp=tc6E",
+		IP:       "140.82.11.202:3306",
+		Schema:   "s1990_economy",
+	}, 3, 10)
+
 	utils.Server = Server
 	utils.Logger = log
 	utils.Worldmanager = manager
+	utils.Economy = &e
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering tasks</green>")))
 	go broadcast.New()
@@ -97,33 +107,22 @@ func main() {
 
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
-
 	for {
 		p, err := Server.Accept()
 		if err != nil {
 			break
 		}
-		p.Handle(handlers.NewSpawmHandler(p))
-		p.ShowCoordinates()
-		t := title.New(utils.GetPrefix())
-		t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
-		time.AfterFunc(time.Second*3, func() {
-			utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
-				EventType:       packet.ActorEventElderGuardianCurse,
-				EntityRuntimeID: 1,
-			})
-			p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
-		})
+		onJoin(p)
 		p.SetGameMode(gamemode.Creative{})
 		ws, _ := manager.World("mine_a")
 		ws.AddEntity(p)
 		p.Teleport(ws.Spawn().Vec3Middle())
 	}
 	err = manager.Close()
-
 	if err != nil {
 		panic(err)
 	}
+	utils.Economy.Close()
 }
 
 // ReadConfig reads the configuration from the config.toml file, or creates the file if it does not yet exist.
@@ -147,4 +146,18 @@ func ReadConfig() (dragonfly.Config, error) {
 		return c, fmt.Errorf("error decoding config: %v", err)
 	}
 	return c, nil
+}
+func onJoin(p *player.Player) {
+	p.Handle(handlers.NewSpawmHandler(p))
+	p.ShowCoordinates()
+	t := title.New(utils.GetPrefix())
+	t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
+	time.AfterFunc(time.Second*3, func() {
+		utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
+			EventType:       packet.ActorEventElderGuardianCurse,
+			EntityRuntimeID: 1,
+		})
+		p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
+	})
+	utils.Economy.InitPlayer(p, 2000)
 }
