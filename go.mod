@@ -6,7 +6,7 @@ require (
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
 	github.com/davecgh/go-spew v1.1.1
 	github.com/df-mc/dragonfly v0.0.4-0.20201110155612-7acf341f03cf
-	github.com/df-mc/schematic v1.1.3 // indirect
+	github.com/df-mc/schematic v1.1.3
 	github.com/emperials/df-worldmanager v0.0.0-20201104162122-0a35691b0a27
 	github.com/go-gl/mathgl v1.0.0
 	github.com/go-resty/resty/v2 v2.3.0

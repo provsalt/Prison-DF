@@ -2,9 +2,12 @@ package handlers
 
 import (
 	"github.com/df-mc/dragonfly/dragonfly/entity"
+	"github.com/df-mc/dragonfly/dragonfly/entity/physics"
 	"github.com/df-mc/dragonfly/dragonfly/event"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/world"
+	"github.com/go-gl/mathgl/mgl64"
+	"github.com/sandertv/gophertunnel/minecraft/text"
 	"sync"
 )
 
@@ -25,7 +28,7 @@ func NewSpawmHandler(player *player.Player) *SpawnHandler {
 }
 
 func (handler SpawnHandler) HandleQuit() {
-	// Storage is next.
+	// TODO: Storage is next.
 }
 
 func (handler SpawnHandler) HandleItemDrop(event *event.Context, item *entity.Item) {
@@ -38,6 +41,23 @@ func (handler SpawnHandler) HandleItemDrop(event *event.Context, item *entity.It
 
 func (handler SpawnHandler) HandleAttackEntity(event *event.Context, entity world.Entity) {
 	if _, ok := entity.(*player.Player); ok {
+		event.Cancel()
+	}
+}
+
+func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos world.BlockPos) {
+	if handler.p.World().Name() == "spawn" {
+		spawn := physics.NewAABB(mgl64.Vec3{145, 57, 218}, mgl64.Vec3{201, 95, 274})
+		if !spawn.Vec3Within(pos.Vec3()) {
+			handler.p.SendPopup(text.Colourf("<red>You are not allowed to break blocks here</red>"))
+			event.Cancel()
+		}
+	}
+}
+
+func (handler SpawnHandler) HandleBlockPlace(event *event.Context, pos world.BlockPos, block world.Block) {
+	if handler.p.World().Name() == "spawn" {
+		handler.p.SendPopup(text.Colourf("<red>You are not allowed to place blocks here</red>"))
 		event.Cancel()
 	}
 }

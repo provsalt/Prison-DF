@@ -38,10 +38,11 @@ func New(connection Connection, minConn int, maxconn int) Economy {
 
 func (e Economy) InitPlayer(player *player.Player, defaultmoney int) bool {
 	r := e.Database.QueryRow("SELECT XUID FROM economy WHERE username=?", player.XUID())
-	var data struct {
-		XUID int `json:"xuid"`
+	var XUID int
+	err := r.Scan(&XUID)
+	if err == nil {
+		return true
 	}
-	err := r.Scan(&data.XUID)
 	if errors.Is(err, sql.ErrNoRows) {
 		_, err := e.Database.Exec("REPLACE INTO economy (XUID, username, money) VALUES (?, ?, ?)", player.XUID(), player.Name(), defaultmoney)
 		if err != nil {
@@ -54,4 +55,14 @@ func (e Economy) InitPlayer(player *player.Player, defaultmoney int) bool {
 }
 func (e Economy) Close() {
 	e.Database.Close()
+}
+
+func (e Economy) Balance(player *player.Player) (error, int) {
+	r := e.Database.QueryRow("SELECT money FROM economy WHERE XUID=?", player.XUID())
+	var money int
+	err := r.Scan(&money)
+	if err != nil {
+		return err, 0
+	}
+	return nil, money
 }

@@ -64,8 +64,7 @@ func main() {
 	w := Server.World()
 	w.SetDefaultGameMode(gamemode.Survival{})
 	w.SetSpawn(world.BlockPos{0, 4, 0})
-	w.SetTime(5000)
-	w.StopTime()
+	w.SetSpawn([3]int{173, 98, 131})
 
 	dir, _ := os.Getwd()
 	manager := worldmanager.New(Server, dir, log)
@@ -105,6 +104,7 @@ func main() {
 	}()
 	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
 
+	log.Infof("If you find this project useful, please consider donating to support development: " + text.ANSI(text.Colourf("<aqua>https://www.patreon.com/sandertv</aqua>")))
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
 	for {
@@ -113,10 +113,6 @@ func main() {
 			break
 		}
 		onJoin(p)
-		p.SetGameMode(gamemode.Creative{})
-		ws, _ := manager.World("mine_a")
-		ws.AddEntity(p)
-		p.Teleport(ws.Spawn().Vec3Middle())
 	}
 	err = manager.Close()
 	if err != nil {
@@ -148,6 +144,7 @@ func ReadConfig() (dragonfly.Config, error) {
 	return c, nil
 }
 func onJoin(p *player.Player) {
+	p.SetGameMode(gamemode.Survival{})
 	p.Handle(handlers.NewSpawmHandler(p))
 	p.ShowCoordinates()
 	t := title.New(utils.GetPrefix())
