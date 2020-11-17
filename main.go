@@ -49,11 +49,12 @@ func main() {
 	}
 	watch := stopwatch.Start()
 	Server := dragonfly.New(&config, log)
+
+	defer agent.Close()
 	if err := agent.Listen(agent.Options{}); err != nil {
 		log.Fatal(err)
 		return
 	}
-	defer agent.Close()
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
