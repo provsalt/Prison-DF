@@ -1,7 +1,6 @@
 package economy
 
 import (
-	"Prison/prisons/utils"
 	"database/sql"
 	"errors"
 	"github.com/df-mc/dragonfly/dragonfly/player"
@@ -57,7 +56,7 @@ func (e Economy) InitPlayer(player *player.Player, defaultmoney int) bool {
 func (e Economy) Close() {
 	err := e.Database.Close()
 	if err != nil {
-		utils.GetLogger().Panic(err)
+		panic(err)
 	}
 }
 
