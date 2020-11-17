@@ -51,6 +51,7 @@ func main() {
 	Server := dragonfly.New(&config, log)
 	if err := agent.Listen(agent.Options{}); err != nil {
 		log.Fatal(err)
+		return
 	}
 	defer agent.Close()
 	go func() {
