@@ -6,6 +6,7 @@ import (
 	"Prison/prisons/console"
 	"Prison/prisons/handlers"
 	"Prison/prisons/tasks/broadcast"
+	"Prison/prisons/tasks/minereset"
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
 	"fmt"
@@ -14,6 +15,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
+	"github.com/df-mc/dragonfly/dragonfly/player/scoreboard"
 	"github.com/df-mc/dragonfly/dragonfly/player/title"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
@@ -65,8 +67,7 @@ func main() {
 	log.Infof(text.ANSI(text.Colourf("<green>Starting world</green>")))
 	w := Server.World()
 	w.SetDefaultGameMode(gamemode.Survival{})
-	w.SetSpawn(world.BlockPos{0, 4, 0})
-	w.SetSpawn([3]int{173, 98, 131})
+	w.SetSpawn(world.BlockPos{173, 98, 131})
 
 	dir, _ := os.Getwd()
 	manager := worldmanager.New(Server, dir, log)
@@ -104,6 +105,8 @@ func main() {
 			restart.New()
 		}
 	}()
+
+	minereset.NewResetAll()
 	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
 
 	log.Infof("If you find this project useful, please consider donating to support development: " + text.ANSI(text.Colourf("<aqua>https://www.patreon.com/sandertv</aqua>")))
@@ -148,6 +151,7 @@ func ReadConfig() (dragonfly.Config, error) {
 func onJoin(p *player.Player) {
 	p.SetGameMode(gamemode.Survival{})
 	p.Handle(handlers.NewSpawmHandler(p))
+	go utils.Economy.InitPlayer(p, 2000)
 	p.ShowCoordinates()
 	t := title.New(utils.GetPrefix())
 	t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
@@ -158,5 +162,17 @@ func onJoin(p *player.Player) {
 		})
 		p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
 	})
-	utils.Economy.InitPlayer(p, 2000)
+	SendScoreBoard(p)
+}
+
+func SendScoreBoard(player *player.Player) {
+	go func() {
+		err, bal := utils.Economy.Balance(player)
+		if err != nil {
+			player.Disconnect(text.Colourf(utils.GetPrefix() + "An error occured. Please contact the staff team."))
+			utils.GetLogger().Errorf("This error is caused by sebding a scoreboard: \n %w", err)
+		}
+		s := scoreboard.New(text.Colourf(utils.GetPrefix() + "<aqua><b>Prisons</b></aqua>")).Addf(text.Colourf("<b><dark-grey>*</dark-grey><gold>%s</gold><red>%v</red></b>", "Your balance: ", bal))
+		player.SendScoreboard(s)
+	}()
 }

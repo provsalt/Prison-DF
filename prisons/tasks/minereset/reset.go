@@ -12,7 +12,7 @@ type MineReset struct {
 }
 
 func (m MineReset) Dimensions() [3]int {
-	return [3]int{64, 64, 64}
+	return m.Mine.Dimension
 }
 
 func (m MineReset) At(x, y, z int, blockAt func(x int, y int, z int) world.Block) world.Block {

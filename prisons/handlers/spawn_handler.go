@@ -14,6 +14,9 @@ import (
 type SpawnHandler struct {
 	p *player.Player
 	player.NopHandler
+	Rank      int16
+	PaidRank  int16
+	StaffRank int16
 }
 
 var handlers sync.Map
@@ -49,7 +52,7 @@ func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos world.Blo
 	if handler.p.World().Name() == "spawn" {
 		spawn := physics.NewAABB(mgl64.Vec3{145, 57, 218}, mgl64.Vec3{201, 95, 274})
 		if !spawn.Vec3Within(pos.Vec3()) {
-			handler.p.SendPopup(text.Colourf("<red>You are not allowed to break blocks here</red>"))
+			handler.p.SendTip(text.Colourf("<red>You are not allowed to break blocks here</red>"))
 			event.Cancel()
 		}
 	}
