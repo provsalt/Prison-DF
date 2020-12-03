@@ -87,11 +87,11 @@ func main() {
 	}
 
 	e := economy.New(economy.Connection{
-		Username: "u1990_9jqSt4O0ET",
-		Password: "2z^lICvFF86g^sW5Lcp=tc6E",
-		IP:       "140.82.11.202:3306",
-		Schema:   "s1990_economy",
-	}, 3, 10)
+		Username: "u3087_9vHhj1RvfH",
+		Password: "aNvk4S+4=cXAlCpFj3^Jg9iE",
+		IP:       "172.96.172.127:3306",
+		Schema:   "s3087_prisons",
+	}, 2, 10)
 
 	utils.Server = Server
 	utils.Logger = log

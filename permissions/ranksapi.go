@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/df-mc/dragonfly/dragonfly/player"
+	"github.com/sandertv/gophertunnel/minecraft/text"
+	"github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -16,9 +18,10 @@ type Connection struct {
 }
 type RankApi struct {
 	Database *sql.DB
+	Logger   *logrus.Logger
 }
 
-func New(connection Connection, minConn int, maxconn int) RankApi {
+func New(connection Connection, minConn int, maxconn int, logger *logrus.Logger) RankApi {
 	db, err := sql.Open("mysql", connection.Username+":"+connection.Password+"@("+connection.IP+")/"+connection.Schema)
 	if err != nil {
 		utils.Logger.Errorln(err)
@@ -30,7 +33,7 @@ func New(connection Connection, minConn int, maxconn int) RankApi {
 	if err != nil {
 		utils.Logger.Errorln(err)
 	}
-	return RankApi{Database: db}
+	return RankApi{Database: db, Logger: logger}
 }
 
 func (r RankApi) InitPlayer(player *player.Player) bool {
@@ -41,9 +44,10 @@ func (r RankApi) InitPlayer(player *player.Player) bool {
 		return true
 	}
 	if errors.Is(err, sql.ErrNoRows) {
-		_, err := r.Database.Exec("REPLACE INTO economy (XUID, username, PrisonRanks) VALUES (?, ?, ?)", player.XUID(), player.Name(), 0)
+		_, err := r.Database.Exec("REPLACE INTO permissions (XUID, username, PrisonRanks) VALUES (?, ?, ?)", player.XUID(), player.Name(), 0)
 		if err != nil {
-			panic(err)
+			r.Logger.Error(err)
+			player.Disconnect(text.Colourf("Oopsie! \n <red>We have met an exception on our part. \nError code: RANKS MYSQL DATABASE EXCEPTION</red>"))
 		}
 	} else {
 		panic(err)
@@ -52,5 +56,6 @@ func (r RankApi) InitPlayer(player *player.Player) bool {
 }
 
 func GetPermissionLevel(player *player.Player) {
+	// row := r.Database.QueryRow("SELECT XUID FROM permissions WHERE username=?", player.Name())
 
 }
