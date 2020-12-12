@@ -9,6 +9,7 @@ import (
 	"Prison/prisons/tasks/minereset"
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
+	"Prison/ranks"
 	"fmt"
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
@@ -34,6 +35,7 @@ import (
 )
 
 func main() {
+	watch := stopwatch.Start()
 	log := &logrus.Logger{
 		Out:   os.Stderr,
 		Level: logrus.DebugLevel,
@@ -49,7 +51,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("error reading config file: %v", err)
 	}
-	watch := stopwatch.Start()
 	Server := dragonfly.New(&config, log)
 
 	defer agent.Close()
@@ -85,6 +86,7 @@ func main() {
 	if register {
 		log.Info(text.ANSI(text.Colourf("<green>Successfully registered commands</green>")))
 	}
+	log.Infof(text.ANSI(text.Colourf("<green>Registering databases</green?")))
 
 	e := economy.New(economy.Connection{
 		Username: "u3087_9vHhj1RvfH",
@@ -92,11 +94,20 @@ func main() {
 		IP:       "172.96.172.127:3306",
 		Schema:   "s3087_prisons",
 	}, 2, 10)
+	r := ranks.New(ranks.Connection{
+		IP:       "172.96.172.127:3306",
+		Username: "u3087_9vHhj1RvfH",
+		Password: "aNvk4S+4=cXAlCpFj3^Jg9iE",
+		Schema:   "s3087_prisons",
+	}, 2, 10, log)
+
+	log.Infof(text.ANSI(text.Colourf("<green>Registered databases</green?")))
 
 	utils.Server = Server
 	utils.Logger = log
 	utils.Worldmanager = manager
 	utils.Economy = &e
+	utils.Ranks = &r
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering tasks</green>")))
 	go broadcast.New()

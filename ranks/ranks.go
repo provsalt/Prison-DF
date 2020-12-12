@@ -1,4 +1,4 @@
-package permissions
+package ranks
 
 const (
 	A = iota

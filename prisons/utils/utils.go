@@ -2,6 +2,7 @@ package utils
 
 import (
 	"Prison/economy"
+	"Prison/ranks"
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/session"
@@ -21,6 +22,8 @@ var Logger *logrus.Logger
 var Worldmanager *worldmanager2.WorldManager
 
 var Economy *economy.Economy
+
+var Ranks *ranks.RankApi
 
 func GetServer() *dragonfly.Server {
 	return Server

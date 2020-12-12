@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"Prison/prisons/utils"
+	"Prison/ranks"
 	"github.com/df-mc/dragonfly/dragonfly/entity"
 	"github.com/df-mc/dragonfly/dragonfly/entity/physics"
 	"github.com/df-mc/dragonfly/dragonfly/event"
@@ -14,16 +16,17 @@ import (
 type SpawnHandler struct {
 	p *player.Player
 	player.NopHandler
-	Rank      int16
-	PaidRank  int16
-	StaffRank int16
+	ranks ranks.Ranks
 }
 
 var handlers sync.Map
 
 func NewSpawmHandler(player *player.Player) *SpawnHandler {
+	go utils.Ranks.InitPlayer(player)
+	ranks2 := utils.Ranks.GetPermissionLevel(player)
 	h := &SpawnHandler{
-		p: player,
+		p:     player,
+		ranks: ranks2,
 	}
 	handlers.Store(player, h)
 	return h
@@ -60,7 +63,7 @@ func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos world.Blo
 
 func (handler SpawnHandler) HandleBlockPlace(event *event.Context, pos world.BlockPos, block world.Block) {
 	if handler.p.World().Name() == "spawn" {
-		handler.p.SendPopup(text.Colourf("<red>You are not allowed to place blocks here</red>"))
+		handler.p.SendTip(text.Colourf("<red>You are not allowed to place blocks here</red>"))
 		event.Cancel()
 	}
 }
