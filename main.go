@@ -14,6 +14,8 @@ import (
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
 	"github.com/df-mc/dragonfly/dragonfly"
+	"github.com/df-mc/dragonfly/dragonfly/item"
+	"github.com/df-mc/dragonfly/dragonfly/item/tool"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
 	"github.com/df-mc/dragonfly/dragonfly/player/scoreboard"
@@ -164,9 +166,10 @@ func onJoin(p *player.Player) {
 	p.Handle(handlers.NewSpawmHandler(p))
 	go utils.Economy.InitPlayer(p, 2000)
 	p.ShowCoordinates()
+	p.Inventory().AddItem(item.NewStack(item.Pickaxe{Tier: tool.TierIron}, 1))
 	t := title.New(utils.GetPrefix())
 	t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
-	time.AfterFunc(time.Second*3, func() {
+	time.AfterFunc(time.Second*2, func() {
 		utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
 			EventType:       packet.ActorEventElderGuardianCurse,
 			EntityRuntimeID: 1,
