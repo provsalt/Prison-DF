@@ -32,10 +32,10 @@ const (
 const (
 	Nons = iota + 100
 	Coal
-	Copper
 	Gold
 	Diamond
 	Emerald
+	Netherite
 	Youtuber
 )
 
@@ -48,39 +48,71 @@ const (
 
 func GetAll() map[string]int {
 	ranks := map[string]int{
-		"A":        A,
-		"B":        B,
-		"C":        C,
-		"D":        D,
-		"E":        E,
-		"F":        F,
-		"G":        G,
-		"H":        H,
-		"I":        I,
-		"J":        J,
-		"K":        K,
-		"L":        L,
-		"M":        M,
-		"N":        N,
-		"O":        O,
-		"P":        P,
-		"Q":        Q,
-		"R":        R,
-		"S":        S,
-		"T":        T,
-		"U":        U,
-		"V":        V,
-		"W":        W,
-		"X":        X,
-		"Y":        Y,
-		"Z":        Z,
-		"Nons":     Nons,
-		"Coal":     Coal,
-		"Copper":   Copper,
-		"Gold":     Gold,
-		"Diamond":  Diamond,
-		"Emerald":  Emerald,
-		"Youtuber": Youtuber,
+		"A":         A,
+		"B":         B,
+		"C":         C,
+		"D":         D,
+		"E":         E,
+		"F":         F,
+		"G":         G,
+		"H":         H,
+		"I":         I,
+		"J":         J,
+		"K":         K,
+		"L":         L,
+		"M":         M,
+		"N":         N,
+		"O":         O,
+		"P":         P,
+		"Q":         Q,
+		"R":         R,
+		"S":         S,
+		"T":         T,
+		"U":         U,
+		"V":         V,
+		"W":         W,
+		"X":         X,
+		"Y":         Y,
+		"Z":         Z,
+		"Nons":      Nons,
+		"Coal":      Coal,
+		"Gold":      Gold,
+		"Diamond":   Diamond,
+		"Emerald":   Emerald,
+		"Netherite": Netherite,
+		"Youtuber":  Youtuber,
+	}
+	return ranks
+}
+
+func GetAllPrisonRanks() map[string]int {
+	ranks := map[string]int{
+		"A": A,
+		"B": B,
+		"C": C,
+		"D": D,
+		"E": E,
+		"F": F,
+		"G": G,
+		"H": H,
+		"I": I,
+		"J": J,
+		"K": K,
+		"L": L,
+		"M": M,
+		"N": N,
+		"O": O,
+		"P": P,
+		"Q": Q,
+		"R": R,
+		"S": S,
+		"T": T,
+		"U": U,
+		"V": V,
+		"W": W,
+		"X": X,
+		"Y": Y,
+		"Z": Z,
 	}
 	return ranks
 }

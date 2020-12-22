@@ -29,5 +29,5 @@ func NewResetAll() {
 			utils.GetServer().World().BuildStructure(world.BlockPosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
 
 		}
-	}, time.Minute)
+	}, time.Minute*15)
 }

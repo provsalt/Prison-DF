@@ -3,13 +3,16 @@ package handlers
 import (
 	"Prison/prisons/utils"
 	"Prison/ranks"
+	"fmt"
 	"github.com/df-mc/dragonfly/dragonfly/entity"
 	"github.com/df-mc/dragonfly/dragonfly/entity/physics"
 	"github.com/df-mc/dragonfly/dragonfly/event"
 	"github.com/df-mc/dragonfly/dragonfly/player"
+	"github.com/df-mc/dragonfly/dragonfly/player/chat"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/sandertv/gophertunnel/minecraft/text"
+	"strings"
 	"sync"
 )
 
@@ -66,4 +69,44 @@ func (handler SpawnHandler) HandleBlockPlace(event *event.Context, pos world.Blo
 		handler.p.SendTip(text.Colourf("<red>You are not allowed to place blocks here</red>"))
 		event.Cancel()
 	}
+}
+
+func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
+	fmt.Println("Testing")
+
+	message := strings.Builder{}
+
+	switch h.ranks.StaffRanks {
+	case ranks.Owner:
+		message.WriteString(text.Colourf("<b><red>[<green>OWNER</green></red></b> "))
+	case ranks.Manager:
+		message.WriteString(text.Colourf("<b><dark-yellow>[MANAGER]</dark-yellow</b> "))
+	case ranks.Moderator:
+		message.WriteString(text.Colourf("<dark-green>[MODERATOR]</dark-green> "))
+	case ranks.Helper:
+		message.WriteString(text.Colourf("<dark-blue>[HELPER]</dark-blue> "))
+	}
+
+	switch h.ranks.PaidRanks {
+	case ranks.Coal:
+		message.WriteString(text.Colourf("<grey>[Coal}</grey> "))
+	case ranks.Gold:
+		message.WriteString(text.Colourf("<gold>[Gold]</gold> "))
+	case ranks.Diamond:
+		message.WriteString(text.Colourf("<b><aqua>[Diamond]</aqua><b> "))
+	case ranks.Emerald:
+		message.WriteString(text.Colourf("<b><green>[EMERALD]</green><b> "))
+	case ranks.Netherite:
+		message.WriteString(text.Colourf("<b><black>[<red>NETHE</red><dark-grey>RITE</dark-grey>]</black><b> "))
+	}
+
+	for r, i := range ranks.GetAllPrisonRanks() {
+		if i == h.ranks.PrisonRanks {
+			message.WriteString(text.Colourf("<grey>[</grey><green>%s</green><grey>]</grey >", r))
+		}
+	}
+	message.WriteString(h.p.Name() + ": " + *msg)
+
+	chat.Global.Println(message.String())
+	event.Cancel()
 }
