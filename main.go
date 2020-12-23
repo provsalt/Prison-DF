@@ -5,6 +5,7 @@ import (
 	"Prison/prisons/commands"
 	"Prison/prisons/console"
 	"Prison/prisons/handlers"
+	"Prison/prisons/handlers/worlds"
 	"Prison/prisons/tasks/broadcast"
 	"Prison/prisons/tasks/minereset"
 	"Prison/prisons/tasks/restart"
@@ -23,6 +24,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
 	worldmanager "github.com/emperials/df-worldmanager"
+	"github.com/go-resty/resty/v2"
 	"github.com/nakabonne/gosivy/agent"
 	"github.com/pelletier/go-toml"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
@@ -71,6 +73,7 @@ func main() {
 	w := Server.World()
 	w.SetDefaultGameMode(gamemode.Survival{})
 	w.SetSpawn(world.BlockPos{173, 98, 131})
+	w.Handle(worlds.NewSpawnWorldHandler(w))
 
 	dir, _ := os.Getwd()
 	manager := worldmanager.New(Server, dir, log)
@@ -162,9 +165,19 @@ func ReadConfig() (dragonfly.Config, error) {
 	return c, nil
 }
 func onJoin(p *player.Player) {
-	p.SetGameMode(gamemode.Survival{})
-	p.Handle(handlers.NewSpawmHandler(p))
 	go utils.Economy.InitPlayer(p, 2000)
+	p.SetGameMode(gamemode.Survival{})
+	rest := resty.New()
+	type json struct {
+		Username string `json:"username"`
+		Content  string `json:"content"`
+	}
+	_, err := rest.R().SetBody(json{"Joins", "[+] " + p.Name()}).Post(utils.WebhookURL)
+
+	if err != nil {
+		utils.Logger.Errorln(err)
+	}
+	p.Handle(handlers.NewSpawmHandler(p))
 	p.ShowCoordinates()
 	p.Inventory().AddItem(item.NewStack(item.Pickaxe{Tier: tool.TierIron}, 1))
 	t := title.New(utils.GetPrefix())

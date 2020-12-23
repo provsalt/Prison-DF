@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
+	github.com/bwmarrin/discordgo v0.22.0 // indirect
 	github.com/davecgh/go-spew v1.1.1
 	github.com/df-mc/dragonfly v0.0.4-0.20201205160816-6629edba62dc
 	github.com/emperials/df-worldmanager v0.0.0-20201104162122-0a35691b0a27
