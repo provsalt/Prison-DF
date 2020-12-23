@@ -3,7 +3,6 @@ package handlers
 import (
 	"Prison/prisons/utils"
 	"Prison/ranks"
-	"fmt"
 	"github.com/df-mc/dragonfly/dragonfly/entity"
 	"github.com/df-mc/dragonfly/dragonfly/entity/physics"
 	"github.com/df-mc/dragonfly/dragonfly/event"
@@ -11,6 +10,7 @@ import (
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/go-gl/mathgl/mgl64"
+	"github.com/go-resty/resty/v2"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"strings"
 	"sync"
@@ -36,8 +36,19 @@ func NewSpawmHandler(player *player.Player) *SpawnHandler {
 
 }
 
-func (handler SpawnHandler) HandleQuit() {
+func (h SpawnHandler) HandleQuit() {
 	// TODO: Storage is next.
+
+	type json struct {
+		Username string `json:"username"`
+		Content  string `json:"content"`
+	}
+	rest := resty.New()
+	_, err := rest.R().SetBody(json{"Leaves", "[-] " + h.p.Name()}).Post(utils.WebhookURL)
+
+	if err != nil {
+		utils.Logger.Errorln(err)
+	}
 }
 
 func (handler SpawnHandler) HandleItemDrop(event *event.Context, item *entity.Item) {
@@ -72,8 +83,6 @@ func (handler SpawnHandler) HandleBlockPlace(event *event.Context, pos world.Blo
 }
 
 func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
-	fmt.Println("Testing")
-
 	message := strings.Builder{}
 
 	switch h.ranks.StaffRanks {
@@ -108,5 +117,16 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 	message.WriteString(h.p.Name() + ": " + *msg)
 
 	chat.Global.Println(message.String())
+	type json struct {
+		Username string `json:"username"`
+		Content  string `json:"content"`
+	}
+	rest := resty.New()
+	_, err := rest.R().SetBody(json{"Prisons Chat", h.p.Name() + ": " + *msg}).Post(utils.WebhookURL)
+
+	if err != nil {
+		utils.Logger.Errorln(err)
+	}
+
 	event.Cancel()
 }
