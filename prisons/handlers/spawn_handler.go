@@ -78,7 +78,7 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 
 	switch h.ranks.StaffRanks {
 	case ranks.Owner:
-		message.WriteString(text.Colourf("<b><red>[<green>OWNER</green></red></b> "))
+		message.WriteString(text.Colourf("<b><red>[<green>OWNER</green>]</red></b> "))
 	case ranks.Manager:
 		message.WriteString(text.Colourf("<b><dark-yellow>[MANAGER]</dark-yellow</b> "))
 	case ranks.Moderator:
@@ -102,7 +102,7 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 
 	for r, i := range ranks.GetAllPrisonRanks() {
 		if i == h.ranks.PrisonRanks {
-			message.WriteString(text.Colourf("<grey>[</grey><green>%s</green><grey>]</grey >", r))
+			message.WriteString(text.Colourf("<grey>[</grey><green>%s</green><grey>]</grey> ", r))
 		}
 	}
 	message.WriteString(h.p.Name() + ": " + *msg)

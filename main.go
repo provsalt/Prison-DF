@@ -91,16 +91,16 @@ func main() {
 	log.Infof(text.ANSI(text.Colourf("<green>Registering databases</green?")))
 
 	e := economy.New(economy.Connection{
-		Username: "u3087_9vHhj1RvfH",
-		Password: "aNvk4S+4=cXAlCpFj3^Jg9iE",
-		IP:       "172.96.172.127:3306",
-		Schema:   "s3087_prisons",
+		Username: "u3426_jj0S8B64nZ",
+		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
+		IP:       "140.82.11.202:3306",
+		Schema:   "s3426_prisons",
 	}, 2, 10)
 	r := ranks.New(ranks.Connection{
-		IP:       "172.96.172.127:3306",
-		Username: "u3087_9vHhj1RvfH",
-		Password: "aNvk4S+4=cXAlCpFj3^Jg9iE",
-		Schema:   "s3087_prisons",
+		IP:       "140.82.11.202:3306",
+		Username: "u3426_jj0S8B64nZ",
+		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
+		Schema:   "s3426_prisons",
 	}, 2, 10, log)
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registered databases</green?")))
