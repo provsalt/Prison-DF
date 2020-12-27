@@ -189,7 +189,9 @@ func onJoin(p *player.Player) {
 		})
 		p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
 	})
-	SendScoreBoard(p)
+	time.AfterFunc(time.Second, func() {
+		SendScoreBoard(p)
+	})
 }
 
 func SendScoreBoard(player *player.Player) {

@@ -130,3 +130,7 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 
 	event.Cancel()
 }
+
+func (h SpawnHandler) HandleMoneyChange(ctx event.Context, bal int) {
+
+}

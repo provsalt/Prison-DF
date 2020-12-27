@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"Prison/prisons/commands/economy"
 	gamemode2 "Prison/prisons/commands/gamemode"
 	"Prison/prisons/commands/help"
 	"Prison/prisons/commands/say"
@@ -20,6 +21,7 @@ func Register() bool {
 	cmd.Register(cmd.New("vote", "Vote for the server", nil, voting.Vote{}))
 	cmd.Register(cmd.New("say", "Broadcast your message", nil, say.Say{}))
 	cmd.Register(cmd.New("world", "Manage worlds", nil, world.Teleport{}))
+	cmd.Register(cmd.New("economy", "The economy commands", []string{"eco", "e"}, economy.Economy{}, economy.Bal{}, economy.Balance{}))
 
 	return true
 }
