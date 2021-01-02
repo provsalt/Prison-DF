@@ -1,6 +1,8 @@
 package gamemode
 
 import (
+	"Prison/prisons/utils"
+	"Prison/ranks"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
@@ -19,6 +21,12 @@ func (g Gamemode) Run(source cmd.Source, output *cmd.Output) {
 	}
 
 	p := source.(*player.Player)
+
+	staffRank := utils.Ranks.GetPermissionLevel(p).StaffRanks
+	if staffRank < ranks.Manager {
+		output.Printf(text.Colourf("Haha, nice try. You aren't suppose to run this."))
+	}
+
 	mode := strings.ToLower(g.Gamemode)
 	switch mode {
 	case "creative", "c":

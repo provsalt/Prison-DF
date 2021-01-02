@@ -471,3 +471,39 @@
 23:48:21.462441 db@janitor F·5 G·1
 23:48:21.462441 db@janitor removing table-102
 23:48:21.483835 db@open done T·1.0407893s
+=============== Dec 28, 2020 (+08) ===============
+02:12:51.890361 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+02:12:51.992447 version@stat F·[1 1] S·1MiB[578KiB 450KiB] Sc·[0.25 0.00]
+02:12:51.992447 db@open opening
+02:12:51.992447 journal@recovery F·1
+02:12:51.995447 journal@recovery recovering @107
+02:12:53.713767 memdb@flush created L0@109 N·7200 S·539KiB "\x03\x00\x00..\x00\x00-,v287418":"\x11\x00\x00..\x00\x00v,v290357"
+02:12:53.715764 version@stat F·[2 1] S·1MiB[1MiB 450KiB] Sc·[0.50 0.00]
+02:12:54.037586 db@janitor F·5 G·0
+02:12:54.037586 db@open done T·2.0451387s
+02:14:37.669936 table@compaction L0·2 -> L1·1 S·1MiB Q·294037
+02:14:38.203593 table@build created L1@112 N·6803 S·449KiB "\x00\x00\x00..\x00\x00-,v277497":"\xff\xff\xff..\xff\xffv,v273396"
+02:14:38.204592 version@stat F·[0 1] S·449KiB[0B 449KiB] Sc·[0.00 0.00]
+02:14:38.238573 table@compaction committed F-2 S-1MiB Ke·0 D·27540 T·567.6382ms
+02:14:38.250566 table@remove removed @106
+02:14:38.251566 table@remove removed @105
+02:16:37.761295 db@close closing
+02:16:37.780284 db@close done T·18.9891ms
+=============== Dec 29, 2020 (+08) ===============
+13:08:35.515407 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+13:08:35.580380 version@stat F·[0 1] S·449KiB[0B 449KiB] Sc·[0.00 0.00]
+13:08:35.580380 db@open opening
+13:08:35.580380 journal@recovery F·1
+13:08:35.581379 journal@recovery recovering @110
+13:08:35.981034 memdb@flush created L0@113 N·4440 S·275KiB "\x03\x00\x00..\x00\x00-,v296199":"\x11\x00\x00..\x00\x00v,v296898"
+13:08:35.989030 version@stat F·[1 1] S·725KiB[275KiB 449KiB] Sc·[0.25 0.00]
+13:08:36.397383 db@janitor F·5 G·1
+13:08:36.397383 db@janitor removing table-109
+13:08:36.452352 db@open done T·871.9713ms
+13:14:43.897406 table@compaction L0·1 -> L1·1 S·725KiB Q·298478
+13:14:44.242989 table@build created L1@116 N·6803 S·449KiB "\x00\x00\x00..\x00\x00-,v277497":"\xff\xff\xff..\xff\xffv,v273396"
+13:14:44.242989 version@stat F·[0 1] S·449KiB[0B 449KiB] Sc·[0.00 0.00]
+13:14:44.272972 table@compaction committed F-1 S-275KiB Ke·0 D·4440 T·375.5666ms
+13:14:44.277969 table@remove removed @112
+13:17:25.788522 db@close closing
+13:17:25.810507 db@close done T·21.9848ms

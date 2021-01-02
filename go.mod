@@ -1,6 +1,6 @@
 module Prison
 
-go 1.13
+go 1.15
 
 require (
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
@@ -13,11 +13,11 @@ require (
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/nakabonne/gosivy v0.2.0
 	github.com/pelletier/go-toml v1.8.1
-	github.com/sandertv/gophertunnel v1.9.4
+	github.com/sandertv/gophertunnel v1.10.3
 	github.com/shirou/gopsutil v3.20.10+incompatible // indirect
 	github.com/sirupsen/logrus v1.7.0
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
-	golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9 // indirect
-	golang.org/x/sys v0.0.0-20201117170446-d9b008d0a637 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 )
+
+// replace github.com/df-mc/dragonfly => C:\github.com\CiviledCode\dragonfly

@@ -12,7 +12,7 @@ import (
 type SubPay string
 
 type Pay struct {
-	Sub SubPay
+	Sub    SubPay
 	Player []cmd.Target
 	Amount int
 }
@@ -37,21 +37,25 @@ func (p Pay) Run(source cmd.Source, output *cmd.Output) {
 			return
 		}
 
-		if bal > p.Amount{
+		if bal > p.Amount {
 			err := utils.Economy.ReduceMoney(player2, bal)
 			if errors.Is(err, sql.ErrNoRows) {
 				output.Printf(text.Colourf("<red>This player does not exist</red>"))
-			}else {
+			} else {
 				output.Printf(text.Colourf("<red>%s</red>", err.Error()))
 			}
 			err = utils.Economy.AddMoney(player2, p.Amount)
 
 			if errors.Is(err, sql.ErrNoRows) {
 				output.Printf(text.Colourf("<red>This player does not exist</red>"))
-			}else {
+			} else {
 				output.Printf(text.Colourf("<red>%s</red>", err.Error()))
 			}
 		}
 		output.Printf(text.Colourf("<green>Successfully sent %v to %s</green> ", p.Amount, target.Name()))
 	}
+}
+
+func (s SubPay) SubName() string {
+	return "pay"
 }
