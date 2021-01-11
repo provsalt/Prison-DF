@@ -17,7 +17,7 @@ type Reduce struct {
 }
 
 func (s SubReduce) SubName() string {
-	return "give"
+	return "reduce"
 }
 
 func (r Reduce) Run(source cmd.Source, output *cmd.Output) {
