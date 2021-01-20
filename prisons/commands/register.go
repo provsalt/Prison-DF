@@ -22,6 +22,7 @@ func Register() bool {
 	cmd.Register(cmd.New("say", "Broadcast your message", nil, say.Say{}))
 	cmd.Register(cmd.New("world", "Manage worlds for staff only", nil, world.Teleport{}))
 	cmd.Register(cmd.New("economy", "The economy commands", []string{"eco", "e"}, economy.Economy{}, economy.Bal{}, economy.Balance{}, economy.Pay{}, economy.Reduce{}))
+	// cmd.Register()
 
 	return true
 }

@@ -58,12 +58,15 @@ func main() {
 	Server := dragonfly.New(&config, log)
 
 	defer agent.Close()
-	if err := agent.Listen(agent.Options{}); err != nil {
+	err = agent.Listen(agent.Options{
+		Addr: ":25565",
+	})
+	if err != nil {
 		log.Fatal(err)
 		return
 	}
 	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil))
+		log.Println(http.ListenAndServe("localhost:5000", nil))
 	}()
 	Server.CloseOnProgramEnd()
 	if err := Server.Start(); err != nil {

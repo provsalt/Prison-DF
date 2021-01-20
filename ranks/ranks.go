@@ -42,6 +42,7 @@ const (
 const (
 	Helper = iota + 1000
 	Moderator
+	Developer
 	Manager
 	Owner
 )
