@@ -10,7 +10,6 @@ import (
 	"Prison/prisons/tasks/minereset"
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
-	packet2 "Prison/prisons/utils/packet"
 	"Prison/ranks"
 	"fmt"
 	"github.com/bradhe/stopwatch"
@@ -127,9 +126,6 @@ func main() {
 
 	minereset.NewResetAll()
 	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
-
-	packet2.Register()
-	log.Printf(text.ANSI(text.Colourf("<green>Registered customj pakcets</green>")))
 
 	log.Infof("If you find this project useful, please consider donating to support development: " + text.ANSI(text.Colourf("<aqua>https://www.patreon.com/sandertv</aqua>")))
 	watch.Stop()
