@@ -520,3 +520,18 @@
 22:34:59.900225 db@open done T·2.3217886s
 22:40:38.295473 db@close closing
 22:40:38.317460 db@close done T·21.9874ms
+=============== Feb 14, 2021 (AWST) ===============
+09:22:28.902490 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:22:29.021550 version@stat F·[1 1] S·770KiB[321KiB 449KiB] Sc·[0.25 0.00]
+09:22:29.022548 db@open opening
+09:22:29.022548 journal@recovery F·1
+09:22:29.024544 journal@recovery recovering @118
+09:22:29.037537 version@stat F·[1 1] S·770KiB[321KiB 449KiB] Sc·[0.25 0.00]
+09:22:29.286581 db@janitor F·4 G·0
+09:22:29.287580 db@open done T·265.0325ms
+09:25:59.018280 table@compaction L0·1 -> L1·1 S·770KiB Q·303919
+09:25:59.300800 table@build created L1@122 N·6803 S·449KiB "\x00\x00\x00..\x00\x00-,v277497":"\xff\xff\xff..\xff\xffv,v273396"
+09:25:59.300800 version@stat F·[0 1] S·449KiB[0B 449KiB] Sc·[0.00 0.00]
+09:25:59.396512 table@compaction committed F-1 S-321KiB Ke·0 D·5440 T·378.2318ms
+09:25:59.432504 table@remove removed @117
+09:25:59.475480 table@remove removed @116

@@ -10,6 +10,7 @@ import (
 	"Prison/prisons/tasks/minereset"
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
+	packet2 "Prison/prisons/utils/packet"
 	"Prison/ranks"
 	"fmt"
 	"github.com/bradhe/stopwatch"
@@ -31,7 +32,6 @@ import (
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
 	easy "github.com/t-tomalak/logrus-easy-formatter"
-	"io/ioutil"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -128,6 +128,9 @@ func main() {
 	minereset.NewResetAll()
 	log.Infof(text.ANSI(text.Colourf("<green>Registered tasks</green>")))
 
+	packet2.Register()
+	log.Printf(text.ANSI(text.Colourf("<green>Registered customj pakcets</green>")))
+
 	log.Infof("If you find this project useful, please consider donating to support development: " + text.ANSI(text.Colourf("<aqua>https://www.patreon.com/sandertv</aqua>")))
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
@@ -153,12 +156,12 @@ func ReadConfig() (dragonfly.Config, error) {
 		if err != nil {
 			return c, fmt.Errorf("failed encoding default config: %v", err)
 		}
-		if err := ioutil.WriteFile("config.toml", data, 0644); err != nil {
+		if err := os.WriteFile("config.toml", data, 0644); err != nil {
 			return c, fmt.Errorf("failed creating config: %v", err)
 		}
 		return c, nil
 	}
-	data, err := ioutil.ReadFile("config.toml")
+	data, err := os.ReadFile("config.toml")
 	if err != nil {
 		return c, fmt.Errorf("error reading config: %v", err)
 	}
@@ -198,13 +201,11 @@ func onJoin(p *player.Player) {
 }
 
 func SendScoreBoard(player *player.Player) {
-	go func() {
-		err, bal := utils.Economy.Balance(player)
-		if err != nil {
-			player.Disconnect(text.Colourf(utils.GetPrefix() + "An error occured. Please contact the staff team."))
-			utils.GetLogger().Errorf("This error is caused by sebding a scoreboard: \n %w", err)
-		}
-		s := scoreboard.New(text.Colourf(utils.GetPrefix() + "<aqua><b>Prisons</b></aqua>")).Addf(text.Colourf("<b><dark-grey>*</dark-grey><gold>%s</gold><red>%v</red></b>", "Your balance: ", bal))
-		player.SendScoreboard(s)
-	}()
+	err, bal := utils.Economy.Balance(player)
+	if err != nil {
+		player.Disconnect(text.Colourf(utils.GetPrefix() + "An error occured. Please contact the staff team."))
+		utils.GetLogger().Errorf("This error is caused by sebding a scoreboard: \n %w", err)
+	}
+	s := scoreboard.New(text.Colourf(utils.GetPrefix() + "<aqua><b>Prisons</b></aqua>")).Addf(text.Colourf("<b><dark-grey>*</dark-grey><gold>%s</gold><red>%v</red></b>", "Your balance: ", bal))
+	player.SendScoreboard(s)
 }
