@@ -12,7 +12,6 @@ type Economy struct {
 }
 
 type EconomyHelp struct {
-
 }
 
 type SubHelp string
@@ -26,7 +25,7 @@ func (e Economy) Run(source cmd.Source, output *cmd.Output) {
 }
 
 func (eh EconomyHelp) Submit(submitter form2.Submitter, pressed form2.Button) {
-	return
+
 }
 
 func (s SubHelp) SubName() string {
