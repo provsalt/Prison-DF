@@ -1,6 +1,6 @@
 module Prison
 
-go 1.15
+go 1.16
 
 require (
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
@@ -19,5 +19,3 @@ require (
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 )
-
-// replace github.com/df-mc/dragonfly => /home/provsalt/dragonfly

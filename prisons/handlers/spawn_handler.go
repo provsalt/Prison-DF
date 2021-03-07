@@ -3,7 +3,6 @@ package handlers
 import (
 	"Prison/prisons/utils"
 	"Prison/ranks"
-	"github.com/df-mc/dragonfly/dragonfly/entity"
 	"github.com/df-mc/dragonfly/dragonfly/entity/physics"
 	"github.com/df-mc/dragonfly/dragonfly/event"
 	"github.com/df-mc/dragonfly/dragonfly/player"
@@ -48,20 +47,6 @@ func (h SpawnHandler) HandleQuit() {
 
 	if err != nil {
 		utils.Logger.Errorln(err)
-	}
-}
-
-func (handler SpawnHandler) HandleItemDrop(event *event.Context, item *entity.Item) {
-	event.Continue(func() {
-		if item.World().Name() == "spawn" {
-			event.Cancel()
-		}
-	})
-}
-
-func (handler SpawnHandler) HandleAttackEntity(event *event.Context, entity world.Entity) {
-	if _, ok := entity.(*player.Player); ok {
-		event.Cancel()
 	}
 }
 
