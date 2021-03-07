@@ -34,6 +34,8 @@ import (
 	"net/http"
 	_ "net/http/pprof"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -56,18 +58,16 @@ func main() {
 	}
 	Server := dragonfly.New(&config, log)
 
-	defer agent.Close()
 	err = agent.Listen(agent.Options{
 		Addr: ":25565",
 	})
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	go func() {
 		log.Println(http.ListenAndServe("localhost:5000", nil))
 	}()
-	Server.CloseOnProgramEnd()
+
 	if err = Server.Start(); err != nil {
 		log.Fatalln(err)
 	}
@@ -76,7 +76,6 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	console.StartConsole()
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering commands</green?")))
 	register := commands.Register()
@@ -108,6 +107,22 @@ func main() {
 	log.Infof("If you find this project useful, please consider donating to support development: " + text.ANSI(text.Colourf("<aqua>https://www.patreon.com/sandertv</aqua>")))
 	watch.Stop()
 	log.Infof("Done loading server in %dms", watch.Milliseconds())
+	console.StartConsole()
+
+	stop := make(chan os.Signal, 2)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-stop
+		func() {
+			log.Infof("Shutting down any other existing processes")
+			_ = manager.Close()
+			if err = Server.Close(); err != nil {
+				log.Errorf("error shutting down server: %v", err)
+			}
+			utils.Economy.Close()
+			agent.Close()
+		}()
+	}()
 	for {
 		p, err := Server.Accept()
 		if err != nil {
@@ -115,11 +130,10 @@ func main() {
 		}
 		onJoin(p)
 	}
-	err = manager.Close()
-	if err != nil {
-		panic(err)
-	}
+	log.Infof("Shutting down any other existing processes")
 	utils.Economy.Close()
+	_ = manager.Close()
+	agent.Close()
 }
 
 // ReadConfig reads the configuration from the config.toml file, or creates the file if it does not yet exist.
