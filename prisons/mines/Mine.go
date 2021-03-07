@@ -9,5 +9,5 @@ type Mine struct {
 
 	Dimension [3]int
 	// Blocks followed by the block. Must total to 100
-	Blocks map[world.Block]interface{}
+	Blocks map[world.Block][2]int
 }

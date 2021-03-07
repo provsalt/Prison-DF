@@ -20,11 +20,11 @@ func NewResetAll() {
 			reset := MineReset{Mine: struct {
 				MineName  string
 				Dimension [3]int
-				Blocks    map[world.Block]interface{}
-			}{MineName: "spawn", Dimension: [3]int{55, 37, 128}, Blocks: map[world.Block]interface{}{
-				block.Stone{}:     [2]int{0, 79},
-				block.CoalOre{}:   [2]int{80, 95},
-				block.CoalBlock{}: [2]int{96, 100},
+				Blocks    map[world.Block][2]int
+			}{MineName: "spawn", Dimension: [3]int{55, 37, 128}, Blocks: map[world.Block][2]int{
+				block.Stone{}:     {0, 60},
+				block.CoalOre{}:   {60, 90},
+				block.CoalBlock{}: {90, 100},
 			}}}
 			utils.GetServer().World().BuildStructure(world.BlockPosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
 

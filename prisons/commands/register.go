@@ -6,6 +6,7 @@ import (
 	"Prison/prisons/commands/help"
 	"Prison/prisons/commands/say"
 	"Prison/prisons/commands/stop"
+	"Prison/prisons/commands/test"
 	"Prison/prisons/commands/version"
 	"Prison/prisons/commands/voting"
 	"Prison/prisons/commands/world"
@@ -22,7 +23,7 @@ func Register() bool {
 	cmd.Register(cmd.New("say", "Broadcast your message", nil, say.Say{}))
 	cmd.Register(cmd.New("world", "Manage worlds for staff only", nil, world.Teleport{}))
 	cmd.Register(cmd.New("economy", "The economy commands", []string{"eco", "e"}, economy.Economy{}, economy.Bal{}, economy.Balance{}, economy.Pay{}, economy.Reduce{}))
-	// cmd.Register()
+	cmd.Register(cmd.New("test", "", nil, test.TestCmd{}))
 
 	return true
 }

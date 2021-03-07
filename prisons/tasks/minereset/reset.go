@@ -17,14 +17,12 @@ func (m MineReset) Dimensions() [3]int {
 
 func (m MineReset) At(x, y, z int, blockAt func(x int, y int, z int) world.Block) world.Block {
 	for block, i := range m.Mine.Blocks {
-		chance := rand.New(rand.NewSource(time.Now().UnixNano())).Intn(100)
-		for k, j := range i.([2]int) {
-			// k refers to the lowest
-			// j refers to the highest
+		r := rand.New(rand.NewSource(time.Now().UnixNano()))
+		chance := r.Intn(101)
+		for k, j := range i {
 			if chance >= k && chance <= j {
 				return block
 			}
-			continue
 		}
 	}
 	return nil
