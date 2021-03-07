@@ -68,24 +68,14 @@ func main() {
 		log.Println(http.ListenAndServe("localhost:5000", nil))
 	}()
 	Server.CloseOnProgramEnd()
-	if err := Server.Start(); err != nil {
+	if err = Server.Start(); err != nil {
 		log.Fatalln(err)
 	}
 	log.Infof(text.ANSI(text.Colourf("<green>Starting world</green>")))
-	w := Server.World()
-	w.SetDefaultGameMode(gamemode.Survival{})
-	w.SetSpawn(world.BlockPos{173, 98, 131})
-	w.Handle(worlds.NewSpawnWorldHandler(w))
-
-	dir, _ := os.Getwd()
-	manager := worldmanager.New(Server, dir, log)
-
-	err = manager.LoadWorld("worlds/mine_a", "mine_a", 4)
-
+	manager, err := startWorld(Server, log)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
-
 	console.StartConsole()
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering commands</green?")))
@@ -93,21 +83,9 @@ func main() {
 	if register {
 		log.Info(text.ANSI(text.Colourf("<green>Successfully registered commands</green>")))
 	}
+
 	log.Infof(text.ANSI(text.Colourf("<green>Registering databases</green?")))
-
-	e := economy.New(economy.Connection{
-		Username: "u3426_jj0S8B64nZ",
-		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
-		IP:       "140.82.11.202:3306",
-		Schema:   "s3426_prisons",
-	}, 2, 10)
-	r := ranks.New(ranks.Connection{
-		IP:       "140.82.11.202:3306",
-		Username: "u3426_jj0S8B64nZ",
-		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
-		Schema:   "s3426_prisons",
-	}, 2, 10, log)
-
+	e, r := startDB(log)
 	log.Infof(text.ANSI(text.Colourf("<green>Registered databases</green?")))
 
 	utils.Server = Server
@@ -194,6 +172,39 @@ func onJoin(p *player.Player) {
 	time.AfterFunc(time.Second, func() {
 		SendScoreBoard(p)
 	})
+}
+
+func startWorld(server *dragonfly.Server, logger *logrus.Logger) (*worldmanager.WorldManager, error) {
+	w := server.World()
+	w.SetDefaultGameMode(gamemode.Survival{})
+	w.SetSpawn(world.BlockPos{173, 98, 131})
+	w.Handle(worlds.NewSpawnWorldHandler(w))
+
+	dir, _ := os.Getwd()
+	manager := worldmanager.New(server, dir, logger)
+
+	err := manager.LoadWorld("worlds/mine_a", "mine_a", 4)
+
+	if err != nil {
+		return nil, err
+	}
+	return manager, nil
+}
+
+func startDB(log *logrus.Logger) (economy.Economy, ranks.RankApi) {
+	e := economy.New(economy.Connection{
+		Username: "u3426_jj0S8B64nZ",
+		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
+		IP:       "140.82.11.202:3306",
+		Schema:   "s3426_prisons",
+	}, 2, 10)
+	r := ranks.New(ranks.Connection{
+		IP:       "140.82.11.202:3306",
+		Username: "u3426_jj0S8B64nZ",
+		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
+		Schema:   "s3426_prisons",
+	}, 2, 10, log)
+	return e, r
 }
 
 func SendScoreBoard(player *player.Player) {
