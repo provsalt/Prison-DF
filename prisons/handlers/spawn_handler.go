@@ -3,6 +3,9 @@ package handlers
 import (
 	"Prison/prisons/utils"
 	"Prison/ranks"
+	"strings"
+	"sync"
+
 	"github.com/df-mc/dragonfly/dragonfly/entity/physics"
 	"github.com/df-mc/dragonfly/dragonfly/event"
 	"github.com/df-mc/dragonfly/dragonfly/player"
@@ -11,8 +14,6 @@ import (
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/go-resty/resty/v2"
 	"github.com/sandertv/gophertunnel/minecraft/text"
-	"strings"
-	"sync"
 )
 
 type SpawnHandler struct {
@@ -37,7 +38,7 @@ func NewSpawmHandler(player *player.Player) *SpawnHandler {
 
 func (h SpawnHandler) HandleQuit() {
 	// TODO: Storage is next.
-	if utils.Development == true {
+	if utils.Development {
 		return
 	}
 	type json struct {
@@ -104,7 +105,7 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 	message.WriteString(h.p.Name() + ": " + *msg)
 	event.Cancel()
 	chat.Global.Println(message.String())
-	if utils.Development == true {
+	if utils.Development {
 		return
 	}
 
