@@ -13,9 +13,9 @@ require (
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/nakabonne/gosivy v0.2.0
 	github.com/pelletier/go-toml v1.8.1
-	github.com/sandertv/gophertunnel v1.10.3
+	github.com/sandertv/gophertunnel v1.10.5
 	github.com/shirou/gopsutil v3.20.10+incompatible // indirect
-	github.com/sirupsen/logrus v1.7.0
+	github.com/sirupsen/logrus v1.8.1
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
 	github.com/xhit/go-str2duration/v2 v2.0.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
