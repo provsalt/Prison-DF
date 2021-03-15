@@ -187,6 +187,8 @@ github.com/sandertv/go-raknet v1.10.0/go.mod h1:s1lD7LTts74R9csTeI4WlGcp6PmXAGX+
 github.com/sandertv/gophertunnel v1.7.12/go.mod h1:kpFO99NEFB7GhmQlDvnJ+ykho4U7WgG9Spod8BZxVKw=
 github.com/sandertv/gophertunnel v1.10.3 h1:pDPRvYN3cJ7jtfPXbk5sLv84cqpIU8X9n1X26MCjpo4=
 github.com/sandertv/gophertunnel v1.10.3/go.mod h1:TpC717w6p5WIDDLhQzaXeumOjCsGpsjyzxTCvA4hceg=
+github.com/sandertv/gophertunnel v1.10.5 h1:vlCCU6dkBLjReQ2lJCTtf6TCpzT/zXtXntKFIr2uC4o=
+github.com/sandertv/gophertunnel v1.10.5/go.mod h1:TpC717w6p5WIDDLhQzaXeumOjCsGpsjyzxTCvA4hceg=
 github.com/shirou/gopsutil v2.20.9+incompatible/go.mod h1:5b4v6he4MtMOwMlS0TUMTu2PcXUg8+E1lC7eC3UO/RA=
 github.com/shirou/gopsutil v3.20.10+incompatible h1:kQuRhh6h6y4luXvnmtu/lJEGtdJ3q8lbu9NQY99GP+o=
 github.com/shirou/gopsutil v3.20.10+incompatible/go.mod h1:5b4v6he4MtMOwMlS0TUMTu2PcXUg8+E1lC7eC3UO/RA=
