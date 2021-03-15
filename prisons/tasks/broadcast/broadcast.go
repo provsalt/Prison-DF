@@ -11,7 +11,7 @@ import (
 )
 
 var Messages = [...]string{
-	text.Colourf(utils.Broadcastprefix + "Join our discord today at discord.,moonlightpe.com\n"),
+	text.Colourf(utils.Broadcastprefix + "Join our discord today at discord.moonlightpe.com\n"),
 	text.Colourf(utils.Broadcastprefix + "Remember to vote for our server at vote.moonlightpe.com for rewards\n"),
 	text.Colourf(utils.Broadcastprefix + "Follow our twitter @RealMoonlightPE\n"),
 	text.Colourf(utils.Broadcastprefix + "Check dragonfly out, our server software at github.com/df-mc/dragonfly\n"),

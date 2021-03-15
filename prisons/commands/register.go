@@ -4,6 +4,7 @@ import (
 	"Prison/prisons/commands/economy"
 	gamemode2 "Prison/prisons/commands/gamemode"
 	"Prison/prisons/commands/help"
+	"Prison/prisons/commands/punish"
 	"Prison/prisons/commands/say"
 	"Prison/prisons/commands/stop"
 	"Prison/prisons/commands/test"
@@ -24,6 +25,7 @@ func Register() bool {
 	cmd.Register(cmd.New("world", "Manage worlds for staff only", nil, world.Teleport{}))
 	cmd.Register(cmd.New("economy", "The economy commands", []string{"eco", "e"}, economy.Economy{}, economy.Bal{}, economy.Balance{}, economy.Pay{}, economy.Reduce{}))
 	cmd.Register(cmd.New("test", "", nil, test.TestCmd{}))
+	cmd.Register(cmd.New("punish", "Punish players for their behaviour or actions in game", nil, punish.Punish{}, punish.MutePlayer{}))
 
 	return true
 }
