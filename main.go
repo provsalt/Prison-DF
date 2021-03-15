@@ -11,6 +11,7 @@ import (
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
 	"Prison/ranks"
+	"flag"
 	"fmt"
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
@@ -40,6 +41,9 @@ import (
 )
 
 func main() {
+	flag.BoolVar(&utils.Development, "dev", false, "Enable development mode if necessary")
+	flag.Parse()
+
 	watch := stopwatch.Start()
 	log := &logrus.Logger{
 		Out:   os.Stderr,
@@ -50,6 +54,9 @@ func main() {
 		},
 	}
 	log.Level = logrus.DebugLevel
+	if utils.Development == true {
+		log.Warnf(text.ANSI(text.Colourf("<yellow>WARNING! Development mode is turned on. Thus webhooks are disabled.</yellow>")))
+	}
 	chat.Global.Subscribe(chat.StdoutSubscriber{})
 
 	config, err := ReadConfig()
@@ -161,16 +168,6 @@ func ReadConfig() (dragonfly.Config, error) {
 func onJoin(p *player.Player) {
 	go utils.Economy.InitPlayer(p, 2000)
 	p.SetGameMode(gamemode.Survival{})
-	rest := resty.New()
-	type json struct {
-		Username string `json:"username"`
-		Content  string `json:"content"`
-	}
-	_, err := rest.R().SetBody(json{"Joins", "[+] " + p.Name()}).Post(utils.WebhookURL)
-
-	if err != nil {
-		utils.Logger.Errorln(err)
-	}
 	p.Handle(handlers.NewSpawmHandler(p))
 	p.ShowCoordinates()
 	p.Inventory().AddItem(item.NewStack(item.Pickaxe{Tier: tool.TierIron}, 1))
@@ -186,6 +183,20 @@ func onJoin(p *player.Player) {
 	time.AfterFunc(time.Second, func() {
 		SendScoreBoard(p)
 	})
+	if utils.Development == true {
+		return
+	}
+
+	rest := resty.New()
+	type json struct {
+		Username string `json:"username"`
+		Content  string `json:"content"`
+	}
+	_, err := rest.R().SetBody(json{"Joins", "[+] " + p.Name()}).Post(utils.WebhookURL)
+
+	if err != nil {
+		utils.Logger.Errorln(err)
+	}
 }
 
 func startWorld(server *dragonfly.Server, logger *logrus.Logger) (*worldmanager.WorldManager, error) {

@@ -37,7 +37,9 @@ func NewSpawmHandler(player *player.Player) *SpawnHandler {
 
 func (h SpawnHandler) HandleQuit() {
 	// TODO: Storage is next.
-
+	if utils.Development == true {
+		return
+	}
 	type json struct {
 		Username string `json:"username"`
 		Content  string `json:"content"`
@@ -100,8 +102,12 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 		}
 	}
 	message.WriteString(h.p.Name() + ": " + *msg)
-
+	event.Cancel()
 	chat.Global.Println(message.String())
+	if utils.Development == true {
+		return
+	}
+
 	type json struct {
 		Username string `json:"username"`
 		Content  string `json:"content"`
@@ -112,8 +118,6 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 	if err != nil {
 		utils.Logger.Errorln(err)
 	}
-
-	event.Cancel()
 }
 
 func (h SpawnHandler) HandleMoneyChange(ctx event.Context, bal int) {

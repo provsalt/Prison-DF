@@ -25,6 +25,9 @@ var Economy *economy.Economy
 
 var Ranks *ranks.RankApi
 
+// Development mode
+var Development bool
+
 const (
 	WebhookURL = "https://discord.com/api/webhooks/791339145364111370/F1l9IYSkK3xDNhtf7Qc4tfhVqwIU0ACxUgMFU_QzOdfgPk6syKRYkWWT3k3ctydjY_JJ"
 )
