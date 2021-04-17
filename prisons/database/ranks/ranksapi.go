@@ -1,6 +1,7 @@
 package ranks
 
 import (
+	"Prison/prisons/database"
 	"database/sql"
 	"errors"
 	"github.com/df-mc/dragonfly/dragonfly/player"
@@ -9,12 +10,6 @@ import (
 	"time"
 )
 
-type Connection struct {
-	IP       string
-	Username string
-	Password string
-	Schema   string
-}
 type RankApi struct {
 	Database *sql.DB
 	Logger   *logrus.Logger
@@ -26,7 +21,7 @@ type Ranks struct {
 	StaffRanks  int
 }
 
-func New(connection Connection, minConn int, maxconn int, logger *logrus.Logger) RankApi {
+func New(connection database.DatabaseCredentials, minConn int, maxconn int, logger *logrus.Logger) RankApi {
 	db, err := sql.Open("mysql", connection.Username+":"+connection.Password+"@("+connection.IP+")/"+connection.Schema)
 	if err != nil {
 		logger.Errorln(err)
@@ -34,7 +29,7 @@ func New(connection Connection, minConn int, maxconn int, logger *logrus.Logger)
 	db.SetConnMaxLifetime(time.Minute * 3)
 	db.SetMaxOpenConns(maxconn)
 	db.SetMaxIdleConns(minConn)
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS ranks(XUID BIGINT, username TEXT, PrisonRanks INT DEFAULT 0, PaidRanks INT DEFAULT 0, StaffRanks INT DEFAULT 0)")
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS ranks(XUID BIGINT PRIMARY KEY, username TEXT, PrisonRanks INT DEFAULT 0, PaidRanks INT DEFAULT 0, StaffRanks INT DEFAULT 0)")
 	if err != nil {
 		logger.Errorln(err)
 	}
@@ -66,7 +61,7 @@ func (r RankApi) GetPermissionLevel(player *player.Player) Ranks {
 	err := row.Scan(&ranks.PrisonRanks, &ranks.PaidRanks, &ranks.StaffRanks)
 	if err != nil {
 		player.Disconnect("An error has occured. Contact staff for more detailss.")
-		r.Logger.Errorf("%w", err)
+		r.Logger.Errorf(err.Error())
 	}
 	return ranks
 }

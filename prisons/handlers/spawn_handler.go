@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	ranks3 "Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	"Prison/ranks"
 	"strings"
 	"sync"
 
@@ -19,7 +19,7 @@ import (
 type SpawnHandler struct {
 	p *player.Player
 	player.NopHandler
-	ranks ranks.Ranks
+	ranks ranks3.Ranks
 }
 
 var handlers sync.Map
@@ -74,30 +74,30 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 	message := strings.Builder{}
 
 	switch h.ranks.StaffRanks {
-	case ranks.Owner:
+	case ranks3.Owner:
 		message.WriteString(text.Colourf("<b><red>[<green>OWNER</green>]</red></b> "))
-	case ranks.Manager:
+	case ranks3.Manager:
 		message.WriteString(text.Colourf("<b><dark-yellow>[MANAGER]</dark-yellow</b> "))
-	case ranks.Moderator:
+	case ranks3.Moderator:
 		message.WriteString(text.Colourf("<dark-green>[MODERATOR]</dark-green> "))
-	case ranks.Helper:
+	case ranks3.Helper:
 		message.WriteString(text.Colourf("<dark-blue>[HELPER]</dark-blue> "))
 	}
 
 	switch h.ranks.PaidRanks {
-	case ranks.Coal:
+	case ranks3.Coal:
 		message.WriteString(text.Colourf("<grey>[Coal}</grey> "))
-	case ranks.Gold:
+	case ranks3.Gold:
 		message.WriteString(text.Colourf("<gold>[Gold]</gold> "))
-	case ranks.Diamond:
+	case ranks3.Diamond:
 		message.WriteString(text.Colourf("<b><aqua>[Diamond]</aqua><b> "))
-	case ranks.Emerald:
+	case ranks3.Emerald:
 		message.WriteString(text.Colourf("<b><green>[EMERALD]</green><b> "))
-	case ranks.Netherite:
+	case ranks3.Netherite:
 		message.WriteString(text.Colourf("<b><black>[<red>NETHE</red><dark-grey>RITE</dark-grey>]</black><b> "))
 	}
 
-	for r, i := range ranks.GetAllPrisonRanks() {
+	for r, i := range ranks3.GetAllPrisonRanks() {
 		if i == h.ranks.PrisonRanks {
 			message.WriteString(text.Colourf("<grey>[</grey><green>%s</green><grey>]</grey> ", r))
 		}

@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"Prison/economy"
-	"Prison/ranks"
+	"Prison/prisons/database/economy"
+	"Prison/prisons/database/ranks"
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/session"

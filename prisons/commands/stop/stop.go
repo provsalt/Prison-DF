@@ -1,8 +1,8 @@
 package stop
 
 import (
+	ranks2 "Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	ranks2 "Prison/ranks"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 )

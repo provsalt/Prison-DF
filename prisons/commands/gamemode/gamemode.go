@@ -1,8 +1,8 @@
 package gamemode
 
 import (
+	"Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	"Prison/ranks"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"

@@ -1,8 +1,8 @@
 package economy
 
 import (
+	"Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	"Prison/ranks"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/sandertv/gophertunnel/minecraft/text"

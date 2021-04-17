@@ -17,6 +17,5 @@ require (
 	github.com/shirou/gopsutil v3.20.10+incompatible // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
-	github.com/xhit/go-str2duration/v2 v2.0.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
+	github.com/xhit/go-str2duration/v2 v2.0.0
 )

@@ -1,16 +1,17 @@
 package main
 
 import (
-	"Prison/economy"
 	"Prison/prisons/commands"
 	"Prison/prisons/console"
+	"Prison/prisons/database"
+	"Prison/prisons/database/economy"
+	"Prison/prisons/database/ranks"
 	"Prison/prisons/handlers"
 	"Prison/prisons/handlers/worlds"
 	"Prison/prisons/tasks/broadcast"
 	"Prison/prisons/tasks/minereset"
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
-	"Prison/ranks"
 	"flag"
 	"fmt"
 	"github.com/bradhe/stopwatch"
@@ -217,17 +218,17 @@ func startWorld(server *dragonfly.Server, logger *logrus.Logger) (*worldmanager.
 }
 
 func startDB(log *logrus.Logger) (economy.Economy, ranks.RankApi) {
-	e := economy.New(economy.Connection{
-		Username: "u3426_jj0S8B64nZ",
-		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
-		IP:       "140.82.11.202:3306",
-		Schema:   "s3426_prisons",
+	e := economy.New(database.DatabaseCredentials{
+		Username: "doadmin",
+		Password: "vq16lbw6gqky1lnl",
+		IP:       "prisons-do-user-8799603-0.b.db.ondigitalocean.com:25060",
+		Schema:   "defaultdb",
 	}, 2, 10)
-	r := ranks.New(ranks.Connection{
-		IP:       "140.82.11.202:3306",
-		Username: "u3426_jj0S8B64nZ",
-		Password: "ecW=3pMEkIZkHzrPm5@zA4cU",
-		Schema:   "s3426_prisons",
+	r := ranks.New(database.DatabaseCredentials{
+		IP:       "prisons-do-user-8799603-0.b.db.ondigitalocean.com:25060",
+		Username: "doadmin",
+		Password: "vq16lbw6gqky1lnl",
+		Schema:   "defaultdb",
 	}, 2, 10, log)
 	return e, r
 }

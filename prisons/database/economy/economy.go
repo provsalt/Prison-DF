@@ -1,6 +1,7 @@
 package economy
 
 import (
+	"Prison/prisons/database"
 	"database/sql"
 	"errors"
 	"github.com/df-mc/dragonfly/dragonfly/player"
@@ -12,14 +13,7 @@ type Economy struct {
 	Database *sql.DB
 }
 
-type Connection struct {
-	IP       string
-	Username string
-	Password string
-	Schema   string
-}
-
-func New(connection Connection, minConn int, maxconn int) Economy {
+func New(connection database.DatabaseCredentials, minConn int, maxconn int) Economy {
 	db, err := sql.Open("mysql", connection.Username+":"+connection.Password+"@("+connection.IP+")/"+connection.Schema)
 	if err != nil {
 		panic(err)
@@ -27,7 +21,7 @@ func New(connection Connection, minConn int, maxconn int) Economy {
 	db.SetConnMaxLifetime(time.Minute * 3)
 	db.SetMaxOpenConns(maxconn)
 	db.SetMaxIdleConns(minConn)
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS economy(XUID BIGINT, username TEXT, money FLOAT);")
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS economy(XUID BIGINT PRIMARY KEY, username TEXT, money FLOAT);")
 	if err != nil {
 		panic(err)
 	}
