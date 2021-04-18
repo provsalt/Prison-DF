@@ -2,18 +2,19 @@ package main
 
 import (
 	"Prison/prisons/commands"
+	"Prison/prisons/config"
 	"Prison/prisons/console"
 	"Prison/prisons/database"
 	"Prison/prisons/database/economy"
+	"Prison/prisons/database/punishment"
 	"Prison/prisons/database/ranks"
+	"Prison/prisons/database/userinfo"
 	"Prison/prisons/handlers"
 	"Prison/prisons/handlers/worlds"
 	"Prison/prisons/tasks/broadcast"
 	"Prison/prisons/tasks/minereset"
 	"Prison/prisons/tasks/restart"
 	"Prison/prisons/utils"
-	"flag"
-	"fmt"
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
 	"github.com/df-mc/dragonfly/dragonfly"
@@ -28,7 +29,6 @@ import (
 	worldmanager "github.com/emperials/df-worldmanager"
 	"github.com/go-resty/resty/v2"
 	"github.com/nakabonne/gosivy/agent"
-	"github.com/pelletier/go-toml"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
@@ -42,9 +42,6 @@ import (
 )
 
 func main() {
-	flag.BoolVar(&utils.Development, "dev", false, "Enable development mode if necessary")
-	flag.Parse()
-
 	watch := stopwatch.Start()
 	log := &logrus.Logger{
 		Out:   os.Stderr,
@@ -55,16 +52,17 @@ func main() {
 		},
 	}
 	log.Level = logrus.DebugLevel
-	if utils.Development == true {
-		log.Warnf(text.ANSI(text.Colourf("<yellow>WARNING! Development mode is turned on. Thus webhooks are disabled.</yellow>")))
-	}
 	chat.Global.Subscribe(chat.StdoutSubscriber{})
 
-	config, err := ReadConfig()
+	readConfig, err := config.ReadConfig()
 	if err != nil {
-		log.Fatalf("error reading config file: %v", err)
+		log.Fatalf("error reading readConfig file: %v", err)
 	}
-	Server := dragonfly.New(&config, log)
+	if readConfig.Prison.Devmode {
+		log.Warnf(text.ANSI(text.Colourf("<yellow>WARNING! Development mode is turned on. Thus webhooks are disabled.</yellow>")))
+		utils.Development = true
+	}
+	Server := dragonfly.New(&readConfig.Config, log)
 
 	err = agent.Listen(agent.Options{
 		Addr: ":25565",
@@ -92,14 +90,16 @@ func main() {
 	}
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering databases</green?")))
-	e, r := startDB(log)
+	e, r, u, p := startDB(log)
 	log.Infof(text.ANSI(text.Colourf("<green>Registered databases</green?")))
 
 	utils.Server = Server
 	utils.Logger = log
 	utils.Worldmanager = manager
-	utils.Economy = &e
-	utils.Ranks = &r
+	utils.EconomyDB = &e
+	utils.RanksDB = &r
+	utils.UserDB = &u
+	utils.Punishments = &p
 
 	log.Infof(text.ANSI(text.Colourf("<green>Registering tasks</green>")))
 	go broadcast.New()
@@ -127,7 +127,7 @@ func main() {
 			if err = Server.Close(); err != nil {
 				log.Errorf("error shutting down server: %v", err)
 			}
-			utils.Economy.Close()
+			utils.EconomyDB.Close()
 			agent.Close()
 		}()
 	}()
@@ -139,35 +139,13 @@ func main() {
 		onJoin(p)
 	}
 	log.Infof("Shutting down any other existing processes")
-	utils.Economy.Close()
+	utils.EconomyDB.Close()
 	_ = manager.Close()
 	agent.Close()
 }
 
-// ReadConfig reads the configuration from the config.toml file, or creates the file if it does not yet exist.
-func ReadConfig() (dragonfly.Config, error) {
-	c := dragonfly.DefaultConfig()
-	if _, err := os.Stat("config.toml"); os.IsNotExist(err) {
-		data, err := toml.Marshal(c)
-		if err != nil {
-			return c, fmt.Errorf("failed encoding default config: %v", err)
-		}
-		if err := os.WriteFile("config.toml", data, 0644); err != nil {
-			return c, fmt.Errorf("failed creating config: %v", err)
-		}
-		return c, nil
-	}
-	data, err := os.ReadFile("config.toml")
-	if err != nil {
-		return c, fmt.Errorf("error reading config: %v", err)
-	}
-	if err := toml.Unmarshal(data, &c); err != nil {
-		return c, fmt.Errorf("error decoding config: %v", err)
-	}
-	return c, nil
-}
 func onJoin(p *player.Player) {
-	go utils.Economy.InitPlayer(p, 2000)
+	go utils.EconomyDB.InitPlayer(p, 2000)
 	p.SetGameMode(gamemode.Survival{})
 	p.Handle(handlers.NewSpawmHandler(p))
 	p.ShowCoordinates()
@@ -184,7 +162,7 @@ func onJoin(p *player.Player) {
 	time.AfterFunc(time.Second, func() {
 		SendScoreBoard(p)
 	})
-	if utils.Development == true {
+	if utils.Development {
 		return
 	}
 
@@ -217,28 +195,28 @@ func startWorld(server *dragonfly.Server, logger *logrus.Logger) (*worldmanager.
 	return manager, nil
 }
 
-func startDB(log *logrus.Logger) (economy.Economy, ranks.RankApi) {
-	e := economy.New(database.DatabaseCredentials{
-		Username: "doadmin",
-		Password: "vq16lbw6gqky1lnl",
-		IP:       "prisons-do-user-8799603-0.b.db.ondigitalocean.com:25060",
-		Schema:   "defaultdb",
-	}, 2, 10)
-	r := ranks.New(database.DatabaseCredentials{
-		IP:       "prisons-do-user-8799603-0.b.db.ondigitalocean.com:25060",
-		Username: "doadmin",
-		Password: "vq16lbw6gqky1lnl",
-		Schema:   "defaultdb",
-	}, 2, 10, log)
-	return e, r
-}
-
 func SendScoreBoard(player *player.Player) {
-	err, bal := utils.Economy.Balance(player)
+	err, bal := utils.EconomyDB.Balance(player)
 	if err != nil {
 		player.Disconnect(text.Colourf(utils.GetPrefix() + "An error occured. Please contact the staff team."))
 		utils.GetLogger().Errorf("This error is caused by sebding a scoreboard: \n %v", err)
 	}
 	s := scoreboard.New(text.Colourf(utils.GetPrefix() + "<aqua><b>Prisons</b></aqua>")).Addf(text.Colourf("<b><dark-grey>*</dark-grey><gold>%s</gold><red>%v</red></b>", "Your balance: ", bal))
 	player.SendScoreboard(s)
+}
+
+func startDB(log *logrus.Logger) (economy.Economy, ranks.RankApi, userinfo.Database, punishment.Database) {
+	cfg, _ := config.ReadConfig()
+	dbinfo := database.Credentials{
+		Username: cfg.Database.Username,
+		Password: cfg.Database.Password,
+		IP:       cfg.Database.IP,
+		Schema:   cfg.Database.Schema,
+	}
+	e := economy.New(dbinfo, 2, 10)
+	r := ranks.New(dbinfo, 2, 10, log)
+	u := userinfo.New(dbinfo)
+	p := punishment.New(dbinfo)
+
+	return e, r, u, p
 }

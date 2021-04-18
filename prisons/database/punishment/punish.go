@@ -8,7 +8,7 @@ import (
 
 type Database *sql.DB
 
-func New(credentials database.DatabaseCredentials) Database {
+func New(credentials database.Credentials) Database {
 	db, err := sql.Open("mysql", credentials.Username+":"+credentials.Password+"@("+credentials.IP+")/"+credentials.Schema)
 	if err != nil {
 		panic(err)

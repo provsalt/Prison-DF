@@ -22,7 +22,7 @@ func (s SubGive) SubName() string {
 
 func (g Give) Run(source cmd.Source, output *cmd.Output) {
 	if p, ok := source.(*player.Player); ok {
-		if utils.Ranks.GetPermissionLevel(p).StaffRanks < ranks.Manager {
+		if utils.RanksDB.GetPermissionLevel(p).StaffRanks < ranks.Manager {
 			output.Printf(text.Colourf("<red><You aren't allowed to use this command :(/red>"))
 		}
 	}
@@ -40,7 +40,7 @@ func (g Give) Run(source cmd.Source, output *cmd.Output) {
 		if !ok {
 			output.Printf(text.Colourf("<red>Sorry, I had trouble finding that player</red>"))
 		}
-		err := utils.Economy.AddMoney(player2, g.Amount)
+		err := utils.EconomyDB.AddMoney(player2, g.Amount)
 		if err != nil {
 			output.Printf("%v", err)
 			utils.GetLogger().Errorln(err)

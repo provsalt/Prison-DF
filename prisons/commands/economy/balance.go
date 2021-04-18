@@ -8,7 +8,7 @@ import (
 )
 
 type Balance struct {
-	Sub balance
+	Sub    balance
 	Player []cmd.Target `optional:""`
 }
 
@@ -20,7 +20,7 @@ func (b Balance) Run(source cmd.Source, output *cmd.Output) {
 		if !ok {
 			return
 		}
-		err, bal := utils.Economy.Balance(p)
+		err, bal := utils.EconomyDB.Balance(p)
 
 		if err != nil {
 			output.Printf(err.Error())
@@ -37,7 +37,7 @@ func (b Balance) Run(source cmd.Source, output *cmd.Output) {
 		if !ok {
 			output.Printf(text.Colourf("<red>This player does not exist</red>"))
 		}
-		err, bal := utils.Economy.Balance(p)
+		err, bal := utils.EconomyDB.Balance(p)
 
 		if err != nil {
 			output.Printf(err.Error())

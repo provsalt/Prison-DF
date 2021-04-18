@@ -25,8 +25,8 @@ type SpawnHandler struct {
 var handlers sync.Map
 
 func NewSpawmHandler(player *player.Player) *SpawnHandler {
-	go utils.Ranks.InitPlayer(player)
-	ranks2 := utils.Ranks.GetPermissionLevel(player)
+	go utils.RanksDB.InitPlayer(player)
+	ranks2 := utils.RanksDB.GetPermissionLevel(player)
 	h := &SpawnHandler{
 		p:     player,
 		ranks: ranks2,

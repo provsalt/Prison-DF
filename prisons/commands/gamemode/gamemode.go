@@ -22,7 +22,7 @@ func (g Gamemode) Run(source cmd.Source, output *cmd.Output) {
 
 	p := source.(*player.Player)
 
-	staffRank := utils.Ranks.GetPermissionLevel(p).StaffRanks
+	staffRank := utils.RanksDB.GetPermissionLevel(p).StaffRanks
 	if staffRank < ranks.Manager {
 		output.Printf(text.Colourf("Haha, nice try. You aren't suppose to run this."))
 	}

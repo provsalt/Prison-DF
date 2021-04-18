@@ -30,7 +30,7 @@ func (p Pay) Run(source cmd.Source, output *cmd.Output) {
 		if !ok {
 			output.Printf(text.Colourf("<red>This player does not exist</red>"))
 		}
-		err, bal := utils.Economy.Balance(player2)
+		err, bal := utils.EconomyDB.Balance(player2)
 
 		if err != nil {
 			output.Printf(err.Error())
@@ -38,13 +38,13 @@ func (p Pay) Run(source cmd.Source, output *cmd.Output) {
 		}
 
 		if bal > p.Amount {
-			err := utils.Economy.ReduceMoney(player2, bal)
+			err := utils.EconomyDB.ReduceMoney(player2, bal)
 			if errors.Is(err, sql.ErrNoRows) {
 				output.Printf(text.Colourf("<red>This player does not exist</red>"))
 			} else {
 				output.Printf(text.Colourf("<red>%s</red>", err.Error()))
 			}
-			err = utils.Economy.AddMoney(player2, p.Amount)
+			err = utils.EconomyDB.AddMoney(player2, p.Amount)
 
 			if errors.Is(err, sql.ErrNoRows) {
 				output.Printf(text.Colourf("<red>This player does not exist</red>"))

@@ -13,7 +13,7 @@ type Economy struct {
 	Database *sql.DB
 }
 
-func New(connection database.DatabaseCredentials, minConn int, maxconn int) Economy {
+func New(connection database.Credentials, minConn int, maxconn int) Economy {
 	db, err := sql.Open("mysql", connection.Username+":"+connection.Password+"@("+connection.IP+")/"+connection.Schema)
 	if err != nil {
 		panic(err)

@@ -2,7 +2,9 @@ package utils
 
 import (
 	"Prison/prisons/database/economy"
+	"Prison/prisons/database/punishment"
 	"Prison/prisons/database/ranks"
+	"Prison/prisons/database/userinfo"
 	"github.com/df-mc/dragonfly/dragonfly"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/session"
@@ -21,9 +23,16 @@ var Logger *logrus.Logger
 
 var Worldmanager *worldmanager2.WorldManager
 
-var Economy *economy.Economy
+// var Economy *economy.Economy
+//
+// var Ranks *ranks.RankApi
 
-var Ranks *ranks.RankApi
+var (
+	RanksDB     *ranks.RankApi
+	EconomyDB   *economy.Economy
+	Punishments *punishment.Database
+	UserDB      *userinfo.Database
+)
 
 // Development mode
 var Development bool

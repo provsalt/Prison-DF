@@ -13,7 +13,7 @@ func (s Stop) Run(source cmd.Source, output *cmd.Output) {
 	p, ok := source.(*player.Player)
 
 	if ok {
-		ranks := utils.Ranks.GetPermissionLevel(p)
+		ranks := utils.RanksDB.GetPermissionLevel(p)
 		if ranks.StaffRanks != ranks2.Owner {
 			return
 		}

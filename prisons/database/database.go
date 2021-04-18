@@ -1,6 +1,6 @@
 package database
 
-type DatabaseCredentials struct {
+type Credentials struct {
 	IP       string
 	Username string
 	Password string

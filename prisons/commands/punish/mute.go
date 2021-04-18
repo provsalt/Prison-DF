@@ -25,7 +25,7 @@ func (m SubMute) SubName() string {
 
 func (m MutePlayer) Run(source cmd.Source, output *cmd.Output) {
 	if p, ok := source.(*player.Player); ok {
-		if utils.Ranks.GetPermissionLevel(p).StaffRanks < ranks.Helper {
+		if utils.RanksDB.GetPermissionLevel(p).StaffRanks < ranks.Helper {
 			output.Errorf(text.Colourf("You do not have permissions to run this command."))
 		}
 	}

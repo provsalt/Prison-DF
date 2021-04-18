@@ -21,7 +21,7 @@ type Ranks struct {
 	StaffRanks  int
 }
 
-func New(connection database.DatabaseCredentials, minConn int, maxconn int, logger *logrus.Logger) RankApi {
+func New(connection database.Credentials, minConn int, maxconn int, logger *logrus.Logger) RankApi {
 	db, err := sql.Open("mysql", connection.Username+":"+connection.Password+"@("+connection.IP+")/"+connection.Schema)
 	if err != nil {
 		logger.Errorln(err)
