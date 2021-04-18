@@ -3,6 +3,8 @@ package handlers
 import (
 	ranks3 "Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
+	"github.com/df-mc/dragonfly/dragonfly/block/cube"
+	"github.com/df-mc/dragonfly/dragonfly/entity/damage"
 	"strings"
 	"sync"
 
@@ -53,7 +55,7 @@ func (h SpawnHandler) HandleQuit() {
 	}
 }
 
-func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos world.BlockPos) {
+func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos cube.Pos) {
 	if handler.p.World().Name() == "spawn" {
 		spawn := physics.NewAABB(mgl64.Vec3{145, 57, 218}, mgl64.Vec3{201, 95, 274})
 		if !spawn.Vec3Within(pos.Vec3()) {
@@ -63,7 +65,7 @@ func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos world.Blo
 	}
 }
 
-func (handler SpawnHandler) HandleBlockPlace(event *event.Context, pos world.BlockPos, block world.Block) {
+func (handler SpawnHandler) HandleBlockPlace(event *event.Context, pos cube.Pos, block world.Block) {
 	if handler.p.World().Name() == "spawn" {
 		handler.p.SendTip(text.Colourf("<red>You are not allowed to place blocks here</red>"))
 		event.Cancel()
@@ -104,7 +106,7 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 	}
 	message.WriteString(h.p.Name() + ": " + *msg)
 	event.Cancel()
-	chat.Global.Println(message.String())
+	_, _ = chat.Global.WriteString(message.String())
 	if utils.Development {
 		return
 	}
@@ -118,6 +120,12 @@ func (h SpawnHandler) HandleChat(event *event.Context, msg *string) {
 
 	if err != nil {
 		utils.Logger.Errorln(err)
+	}
+}
+
+func (h SpawnHandler) HandleHurt(event *event.Context, d *float64, source damage.Source) {
+	if _, ok := source.(damage.SourceFall); ok {
+		event.Cancel()
 	}
 }
 

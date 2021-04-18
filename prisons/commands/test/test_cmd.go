@@ -6,6 +6,7 @@ import (
 	"Prison/prisons/utils"
 	"github.com/bradhe/stopwatch"
 	"github.com/df-mc/dragonfly/dragonfly/block"
+	"github.com/df-mc/dragonfly/dragonfly/block/cube"
 	"github.com/df-mc/dragonfly/dragonfly/cmd"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/go-gl/mathgl/mgl64"
@@ -27,7 +28,7 @@ func (t TestCmd) Run(source cmd.Source, output *cmd.Output) {
 		block.CoalOre{}:   {60, 90},
 		block.CoalBlock{}: {90, 100},
 	}}}
-	utils.GetServer().World().BuildStructure(world.BlockPosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
+	utils.GetServer().World().BuildStructure(cube.BlockPosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
 	s.Stop()
 	utils.GetLogger().Infof("Done reseting in %dms", s.Milliseconds()) // Done reseting in 5278ms
 }

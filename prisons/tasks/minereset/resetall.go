@@ -4,6 +4,7 @@ import (
 	"Prison/prisons/tasks"
 	"Prison/prisons/utils"
 	"github.com/df-mc/dragonfly/dragonfly/block"
+	"github.com/df-mc/dragonfly/dragonfly/block/cube"
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/go-gl/mathgl/mgl64"
@@ -16,7 +17,7 @@ func NewResetAll() {
 		uptime := utils.GetServer().Uptime()
 		switch {
 		case uptime > time.Minute*15, uptime > time.Minute*30, uptime > time.Minute*45, uptime > time.Minute*59:
-			chat.Global.Printf(text.Colourf(utils.Broadcastprefix + "<red>Reseting spawn mine\n</red>"))
+			_, _ = chat.Global.WriteString(text.Colourf(utils.Broadcastprefix + "<red>Reseting spawn mine\n</red>"))
 			reset := MineReset{Mine: struct {
 				MineName  string
 				Dimension [3]int
@@ -26,7 +27,7 @@ func NewResetAll() {
 				block.CoalOre{}:   {60, 90},
 				block.CoalBlock{}: {90, 100},
 			}}}
-			utils.GetServer().World().BuildStructure(world.BlockPosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
+			utils.GetServer().World().BuildStructure(cube.BlockPosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
 
 		}
 	}, time.Minute*15)

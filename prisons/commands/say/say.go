@@ -18,6 +18,6 @@ func (s Say) Run(source cmd.Source, output *cmd.Output) {
 		if len(s.Message) == 0 {
 			return
 		}
-		chat.Global.Printf(text.Colourf("<b><red>CONSOLE: </red></b>")+"%s\n", s.Message)
+		_, _ = chat.Global.WriteString(text.Colourf("<b><red>CONSOLE: </red></b>%s\n", s.Message))
 	}
 }

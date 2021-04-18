@@ -24,6 +24,6 @@ var Messages = [...]string{
 func New() {
 	for _, message := range Messages {
 		time.Sleep(time.Minute * 8)
-		chat.Global.Printf(message)
+		_, _ = chat.Global.WriteString(message)
 	}
 }

@@ -18,13 +18,13 @@ import (
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
 	"github.com/df-mc/dragonfly/dragonfly"
+	"github.com/df-mc/dragonfly/dragonfly/block/cube"
 	"github.com/df-mc/dragonfly/dragonfly/item"
 	"github.com/df-mc/dragonfly/dragonfly/item/tool"
 	"github.com/df-mc/dragonfly/dragonfly/player"
 	"github.com/df-mc/dragonfly/dragonfly/player/chat"
 	"github.com/df-mc/dragonfly/dragonfly/player/scoreboard"
 	"github.com/df-mc/dragonfly/dragonfly/player/title"
-	"github.com/df-mc/dragonfly/dragonfly/world"
 	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
 	worldmanager "github.com/emperials/df-worldmanager"
 	"github.com/go-resty/resty/v2"
@@ -181,7 +181,7 @@ func onJoin(p *player.Player) {
 func startWorld(server *dragonfly.Server, logger *logrus.Logger) (*worldmanager.WorldManager, error) {
 	w := server.World()
 	w.SetDefaultGameMode(gamemode.Survival{})
-	w.SetSpawn(world.BlockPos{173, 98, 131})
+	w.SetSpawn(cube.Pos{173, 98, 131})
 	w.Handle(worlds.NewSpawnWorldHandler(w))
 
 	dir, _ := os.Getwd()
@@ -201,7 +201,8 @@ func SendScoreBoard(player *player.Player) {
 		player.Disconnect(text.Colourf(utils.GetPrefix() + "An error occured. Please contact the staff team."))
 		utils.GetLogger().Errorf("This error is caused by sebding a scoreboard: \n %v", err)
 	}
-	s := scoreboard.New(text.Colourf(utils.GetPrefix() + "<aqua><b>Prisons</b></aqua>")).Addf(text.Colourf("<b><dark-grey>*</dark-grey><gold>%s</gold><red>%v</red></b>", "Your balance: ", bal))
+	s := scoreboard.New(text.Colourf(utils.GetPrefix() + "<aqua><b>Prisons</b></aqua>"))
+	_, _ = s.WriteString(text.Colourf("<b><dark-grey>*</dark-grey><gold>%s</gold><red>%v</red></b>", "Your balance: ", bal))
 	player.SendScoreboard(s)
 }
 

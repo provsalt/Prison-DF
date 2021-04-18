@@ -1,6 +1,7 @@
 package worlds
 
 import (
+	"github.com/df-mc/dragonfly/dragonfly/block/cube"
 	"github.com/df-mc/dragonfly/dragonfly/event"
 	"github.com/df-mc/dragonfly/dragonfly/world"
 )
@@ -14,12 +15,12 @@ func NewSpawnWorldHandler(world *world.World) *SpawnWorldHandler {
 	return &SpawnWorldHandler{w: world}
 }
 
-func (s SpawnWorldHandler) HandleLiquidHarden(event *event.Context, _ world.BlockPos, _ world.Block, _ world.Block, _ world.Block) {
+func (s SpawnWorldHandler) HandleLiquidHarden(event *event.Context, _ cube.Pos, _ world.Block, _ world.Block, _ world.Block) {
 	if s.w.Name() == "spawn" {
 		event.Cancel()
 	}
 }
-func (s SpawnWorldHandler) HandleLiquidFlow(event *event.Context, _ world.BlockPos, _ world.BlockPos, _ world.Block, _ world.Block) {
+func (s SpawnWorldHandler) HandleLiquidFlow(event *event.Context, _ cube.Pos, _ cube.Pos, _ world.Block, _ world.Block) {
 	if s.w.Name() == "spawn" {
 		event.Cancel()
 	}
