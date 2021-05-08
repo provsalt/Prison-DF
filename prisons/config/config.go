@@ -2,13 +2,13 @@ package config
 
 import (
 	"fmt"
-	"github.com/df-mc/dragonfly/dragonfly"
+	"github.com/df-mc/dragonfly/server"
 	"github.com/pelletier/go-toml"
 	"os"
 )
 
 type Config struct {
-	dragonfly.Config
+	server.Config
 	Database struct {
 		IP       string
 		Username string

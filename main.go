@@ -17,15 +17,15 @@ import (
 	"Prison/prisons/utils"
 	"github.com/bradhe/stopwatch"
 	_ "github.com/davecgh/go-spew/spew"
-	"github.com/df-mc/dragonfly/dragonfly"
-	"github.com/df-mc/dragonfly/dragonfly/block/cube"
-	"github.com/df-mc/dragonfly/dragonfly/item"
-	"github.com/df-mc/dragonfly/dragonfly/item/tool"
-	"github.com/df-mc/dragonfly/dragonfly/player"
-	"github.com/df-mc/dragonfly/dragonfly/player/chat"
-	"github.com/df-mc/dragonfly/dragonfly/player/scoreboard"
-	"github.com/df-mc/dragonfly/dragonfly/player/title"
-	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
+	"github.com/df-mc/dragonfly/server"
+	"github.com/df-mc/dragonfly/server/block/cube"
+	"github.com/df-mc/dragonfly/server/item"
+	"github.com/df-mc/dragonfly/server/item/tool"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/player/chat"
+	"github.com/df-mc/dragonfly/server/player/scoreboard"
+	"github.com/df-mc/dragonfly/server/player/title"
+	"github.com/df-mc/dragonfly/server/world"
 	worldmanager "github.com/emperials/df-worldmanager"
 	"github.com/go-resty/resty/v2"
 	"github.com/nakabonne/gosivy/agent"
@@ -62,7 +62,7 @@ func main() {
 		log.Warnf(text.ANSI(text.Colourf("<yellow>WARNING! Development mode is turned on. Thus webhooks are disabled.</yellow>")))
 		utils.Development = true
 	}
-	Server := dragonfly.New(&readConfig.Config, log)
+	Server := server.New(&readConfig.Config, log)
 
 	err = agent.Listen(agent.Options{
 		Addr: ":25565",
@@ -146,7 +146,7 @@ func main() {
 
 func onJoin(p *player.Player) {
 	go utils.EconomyDB.InitPlayer(p, 2000)
-	p.SetGameMode(gamemode.Survival{})
+	p.SetGameMode(world.GameModeSurvival{})
 	p.Handle(handlers.NewSpawmHandler(p))
 	p.ShowCoordinates()
 	p.Inventory().AddItem(item.NewStack(item.Pickaxe{Tier: tool.TierIron}, 1))
@@ -178,20 +178,14 @@ func onJoin(p *player.Player) {
 	}
 }
 
-func startWorld(server *dragonfly.Server, logger *logrus.Logger) (*worldmanager.WorldManager, error) {
-	w := server.World()
-	w.SetDefaultGameMode(gamemode.Survival{})
+func startWorld(srv *server.Server, logger *logrus.Logger) (*worldmanager.WorldManager, error) {
+	w := srv.World()
+	w.SetDefaultGameMode(world.GameModeSurvival{})
 	w.SetSpawn(cube.Pos{173, 98, 131})
 	w.Handle(worlds.NewSpawnWorldHandler(w))
 
 	dir, _ := os.Getwd()
-	manager := worldmanager.New(server, dir, logger)
-
-	err := manager.LoadWorld("worlds/mine_a", "mine_a", 4)
-
-	if err != nil {
-		return nil, err
-	}
+	manager := worldmanager.New(srv, dir, logger)
 	return manager, nil
 }
 

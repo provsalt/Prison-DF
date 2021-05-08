@@ -1,7 +1,7 @@
 package help
 
 import (
-	"github.com/df-mc/dragonfly/dragonfly/player/form"
+	"github.com/df-mc/dragonfly/server/player/form"
 )
 
 type HelpForm struct {

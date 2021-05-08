@@ -3,16 +3,16 @@ package handlers
 import (
 	ranks3 "Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	"github.com/df-mc/dragonfly/dragonfly/block/cube"
-	"github.com/df-mc/dragonfly/dragonfly/entity/damage"
+	"github.com/df-mc/dragonfly/server/block/cube"
+	"github.com/df-mc/dragonfly/server/entity/damage"
 	"strings"
 	"sync"
 
-	"github.com/df-mc/dragonfly/dragonfly/entity/physics"
-	"github.com/df-mc/dragonfly/dragonfly/event"
-	"github.com/df-mc/dragonfly/dragonfly/player"
-	"github.com/df-mc/dragonfly/dragonfly/player/chat"
-	"github.com/df-mc/dragonfly/dragonfly/world"
+	"github.com/df-mc/dragonfly/server/entity/physics"
+	"github.com/df-mc/dragonfly/server/event"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/player/chat"
+	"github.com/df-mc/dragonfly/server/world"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/go-resty/resty/v2"
 	"github.com/sandertv/gophertunnel/minecraft/text"
@@ -127,6 +127,7 @@ func (h SpawnHandler) HandleHurt(event *event.Context, d *float64, source damage
 	if _, ok := source.(damage.SourceFall); ok {
 		event.Cancel()
 	}
+
 }
 
 func (h SpawnHandler) HandleMoneyChange(ctx event.Context, bal int) {

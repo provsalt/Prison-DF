@@ -5,9 +5,9 @@ import (
 	"Prison/prisons/database/punishment"
 	"Prison/prisons/database/ranks"
 	"Prison/prisons/database/userinfo"
-	"github.com/df-mc/dragonfly/dragonfly"
-	"github.com/df-mc/dragonfly/dragonfly/player"
-	"github.com/df-mc/dragonfly/dragonfly/session"
+	"github.com/df-mc/dragonfly/server"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/session"
 	worldmanager2 "github.com/emperials/df-worldmanager"
 	"github.com/go-gl/mathgl/mgl32"
 	"github.com/go-gl/mathgl/mgl64"
@@ -17,7 +17,7 @@ import (
 	_ "unsafe"
 )
 
-var Server *dragonfly.Server
+var Server *server.Server
 
 var Logger *logrus.Logger
 
@@ -41,7 +41,7 @@ const (
 	WebhookURL = "https://discord.com/api/webhooks/791339145364111370/F1l9IYSkK3xDNhtf7Qc4tfhVqwIU0ACxUgMFU_QzOdfgPk6syKRYkWWT3k3ctydjY_JJ"
 )
 
-func GetServer() *dragonfly.Server {
+func GetServer() *server.Server {
 	return Server
 }
 
@@ -57,14 +57,14 @@ func GetWorldmanager() *worldmanager2.WorldManager {
 	return Worldmanager
 }
 
-//go:linkname Player_session github.com/df-mc/dragonfly/dragonfly/player.(*Player).session
+//go:linkname Player_session github.com/df-mc/dragonfly/server/player.(*Player).session
 //noinspection ALL
 func Player_session(*player.Player) *session.Session
 
-//go:linkname Session_connection github.com/df-mc/dragonfly/dragonfly/session.(*Session).connection
+//go:linkname Session_connection github.com/df-mc/dragonfly/server/session.(*Session).connection
 //noinspection ALL
 func Session_connection(*session.Session) *minecraft.Conn
 
-//go:linkname Session_writePacket github.com/df-mc/dragonfly/dragonfly/session.(*Session).writePacket
+//go:linkname Session_writePacket github.com/df-mc/dragonfly/server/session.(*Session).writePacket
 //noinspection ALL
 func Session_writePacket(*session.Session, packet.Packet)

@@ -2,7 +2,7 @@ package minereset
 
 import (
 	"Prison/prisons/mines"
-	"github.com/df-mc/dragonfly/dragonfly/world"
+	"github.com/df-mc/dragonfly/server/world"
 	"math/rand"
 	"time"
 )

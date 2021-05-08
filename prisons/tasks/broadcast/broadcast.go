@@ -3,7 +3,7 @@ package broadcast
 import (
 	"Prison/prisons/utils"
 
-	"github.com/df-mc/dragonfly/dragonfly/player/chat"
+	"github.com/df-mc/dragonfly/server/player/chat"
 
 	"time"
 

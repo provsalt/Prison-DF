@@ -3,8 +3,8 @@ package stop
 import (
 	ranks2 "Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	"github.com/df-mc/dragonfly/dragonfly/cmd"
-	"github.com/df-mc/dragonfly/dragonfly/player"
+	"github.com/df-mc/dragonfly/server/cmd"
+	"github.com/df-mc/dragonfly/server/player"
 )
 
 type Stop struct{}

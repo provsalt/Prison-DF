@@ -2,7 +2,7 @@ package restart
 
 import (
 	"Prison/prisons/utils"
-	"github.com/df-mc/dragonfly/dragonfly/player/chat"
+	"github.com/df-mc/dragonfly/server/player/chat"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"time"
 )

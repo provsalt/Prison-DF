@@ -2,7 +2,7 @@ package punish
 
 import (
 	"Prison/prisons/console"
-	"github.com/df-mc/dragonfly/dragonfly/cmd"
+	"github.com/df-mc/dragonfly/server/cmd"
 )
 
 type Punish struct {

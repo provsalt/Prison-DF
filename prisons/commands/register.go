@@ -11,7 +11,7 @@ import (
 	"Prison/prisons/commands/version"
 	"Prison/prisons/commands/voting"
 	"Prison/prisons/commands/world"
-	"github.com/df-mc/dragonfly/dragonfly/cmd"
+	"github.com/df-mc/dragonfly/server/cmd"
 )
 
 // Register ...

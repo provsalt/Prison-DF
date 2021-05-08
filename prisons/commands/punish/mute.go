@@ -3,8 +3,8 @@ package punish
 import (
 	"Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	"github.com/df-mc/dragonfly/dragonfly/cmd"
-	"github.com/df-mc/dragonfly/dragonfly/player"
+	"github.com/df-mc/dragonfly/server/cmd"
+	"github.com/df-mc/dragonfly/server/player"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/xhit/go-str2duration/v2"
 	"time"

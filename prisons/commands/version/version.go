@@ -2,7 +2,7 @@ package version
 
 import (
 	"bufio"
-	"github.com/df-mc/dragonfly/dragonfly/cmd"
+	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/sandertv/gophertunnel/minecraft/protocol"
 	"os"
 	"strings"

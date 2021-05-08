@@ -4,7 +4,7 @@ import (
 	"Prison/prisons/database"
 	"database/sql"
 	"errors"
-	"github.com/df-mc/dragonfly/dragonfly/player"
+	"github.com/df-mc/dragonfly/server/player"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
 	"time"

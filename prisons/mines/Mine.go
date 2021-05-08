@@ -1,7 +1,7 @@
 package mines
 
 import (
-	"github.com/df-mc/dragonfly/dragonfly/world"
+	"github.com/df-mc/dragonfly/server/world"
 )
 
 type Mine struct {

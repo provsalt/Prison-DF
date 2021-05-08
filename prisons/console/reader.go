@@ -4,7 +4,7 @@ package console
 import (
 	"bufio"
 	"fmt"
-	"github.com/df-mc/dragonfly/dragonfly/cmd"
+	"github.com/df-mc/dragonfly/server/cmd"
 	"os"
 	"strings"
 	"time"

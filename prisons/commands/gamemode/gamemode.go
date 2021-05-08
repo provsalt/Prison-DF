@@ -3,9 +3,9 @@ package gamemode
 import (
 	"Prison/prisons/database/ranks"
 	"Prison/prisons/utils"
-	"github.com/df-mc/dragonfly/dragonfly/cmd"
-	"github.com/df-mc/dragonfly/dragonfly/player"
-	"github.com/df-mc/dragonfly/dragonfly/world/gamemode"
+	"github.com/df-mc/dragonfly/server/cmd"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/world"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"strings"
 )
@@ -30,16 +30,16 @@ func (g Gamemode) Run(source cmd.Source, output *cmd.Output) {
 	mode := strings.ToLower(g.Gamemode)
 	switch mode {
 	case "creative", "c":
-		p.SetGameMode(gamemode.Creative{})
+		p.SetGameMode(world.GameModeCreative{})
 		output.Printf("Set your own gamemode to creative")
 	case "survival", "s":
-		p.SetGameMode(gamemode.Survival{})
+		p.SetGameMode(world.GameModeSurvival{})
 		output.Printf("Set your own gamemode to survival")
 	case "adventure", "a":
-		p.SetGameMode(gamemode.Adventure{})
+		p.SetGameMode(world.GameModeAdventure{})
 		output.Printf("Set your own gamemode to adventure")
 	case "spectator":
-		p.SetGameMode(gamemode.Spectator{})
+		p.SetGameMode(world.GameModeSpectator{})
 		output.Printf("Set your own gamemode to spectator")
 	default:
 		output.Printf("Unknown game mode")
