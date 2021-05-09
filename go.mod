@@ -6,7 +6,7 @@ require (
 	github.com/StackExchange/wmi v0.0.0-20210224194228-fe8f1750fd46 // indirect
 	github.com/bradhe/stopwatch v0.0.0-20190618212248-a58cccc508ea
 	github.com/davecgh/go-spew v1.1.1
-	github.com/df-mc/dragonfly v0.0.5-0.20210508134322-ad4650c0628e
+	github.com/df-mc/dragonfly v0.0.5-0.20210509124410-b710c382e8ef
 	github.com/emperials/df-worldmanager v0.0.0-20210508154608-7202438729e1
 	github.com/go-gl/mathgl v1.0.0
 	github.com/go-ole/go-ole v1.2.5 // indirect

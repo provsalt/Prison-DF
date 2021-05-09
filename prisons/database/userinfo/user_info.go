@@ -6,9 +6,11 @@ import (
 	"time"
 )
 
-type Database *sql.DB
+type UserInfo struct {
+	Database *sql.DB
+}
 
-func New(credentials database.Credentials) Database {
+func New(credentials database.Credentials) UserInfo {
 	db, err := sql.Open("mysql", credentials.Username+":"+credentials.Password+"@("+credentials.IP+")/"+credentials.Schema)
 	if err != nil {
 		panic(err)
@@ -20,5 +22,7 @@ func New(credentials database.Credentials) Database {
 	if err != nil {
 		panic(err)
 	}
-	return db
+	return UserInfo{
+		Database: db,
+	}
 }
