@@ -29,7 +29,7 @@ func New(connection database.Credentials, minConn int, maxconn int, logger *logr
 	db.SetConnMaxLifetime(time.Minute * 3)
 	db.SetMaxOpenConns(maxconn)
 	db.SetMaxIdleConns(minConn)
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS ranks(XUID BIGINT PRIMARY KEY, username TEXT, PrisonRanks INT DEFAULT 0, PaidRanks INT DEFAULT 0, StaffRanks INT DEFAULT 0)")
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS ranks(XUID BIGINT, username TEXT, PrisonRanks INT DEFAULT 0, PaidRanks INT DEFAULT 0, StaffRanks INT DEFAULT 0, FOREIGN KEY ranks(XUID) REFERENCES userinfo(XUID))")
 	if err != nil {
 		logger.Errorln(err)
 	}

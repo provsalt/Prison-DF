@@ -16,7 +16,7 @@ func New(credentials database.Credentials) Database {
 	db.SetConnMaxLifetime(time.Minute * 3)
 	db.SetMaxOpenConns(1)
 	db.SetMaxIdleConns(1)
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS userinfo(XUID BIGINT PRIMARY KEY , logins INT, join_time BIGINT, IPV4 TEXT);")
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS userinfo(XUID BIGINT PRIMARY KEY, logins INT, join_time BIGINT, IPV4 TEXT);")
 	if err != nil {
 		panic(err)
 	}

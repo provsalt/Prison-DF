@@ -30,7 +30,7 @@ func (p Pay) Run(source cmd.Source, output *cmd.Output) {
 		if !ok {
 			output.Printf(text.Colourf("<red>This player does not exist</red>"))
 		}
-		err, bal := utils.EconomyDB.Balance(player2)
+		bal, err := utils.EconomyDB.Balance(player2)
 
 		if err != nil {
 			output.Printf(err.Error())

@@ -21,7 +21,7 @@ func New(connection database.Credentials, minConn int, maxconn int) Economy {
 	db.SetConnMaxLifetime(time.Minute * 3)
 	db.SetMaxOpenConns(maxconn)
 	db.SetMaxIdleConns(minConn)
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS economy(XUID BIGINT PRIMARY KEY, username TEXT, money FLOAT);")
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS economy(XUID BIGINT, username TEXT, money FLOAT, FOREIGN KEY (XUID) REFERENCES userinfo(XUID));")
 	if err != nil {
 		panic(err)
 	}
@@ -54,28 +54,28 @@ func (e Economy) Close() {
 	}
 }
 
-func (e Economy) Balance(player *player.Player) (error, int) {
+func (e Economy) Balance(player *player.Player) (int, error) {
 	r := e.Database.QueryRow("SELECT money FROM economy WHERE XUID=?", player.XUID())
 	var money int
 	err := r.Scan(&money)
 	if err != nil {
-		return err, 0
+		return 0, err
 	}
-	return nil, money
+	return money, nil
 }
 
-func (e Economy) BalanceFromName(player string) (error, int) {
+func (e Economy) BalanceFromName(player string) (int, error) {
 	r := e.Database.QueryRow("SELECT money FROM economy WHERE username=?", player)
 	var money int
 	err := r.Scan(&money)
 	if err != nil {
-		return err, 0
+		return 0, err
 	}
-	return nil, money
+	return money, nil
 }
 
 func (e Economy) AddMoney(player *player.Player, amount int) error {
-	err, bal := e.Balance(player)
+	bal, err := e.Balance(player)
 	if err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func (e Economy) AddMoney(player *player.Player, amount int) error {
 }
 
 func (e Economy) ReduceMoney(player *player.Player, amount int) error {
-	err, bal := e.Balance(player)
+	bal, err := e.Balance(player)
 	if err != nil {
 		return err
 	}
@@ -99,7 +99,7 @@ func (e Economy) ReduceMoney(player *player.Player, amount int) error {
 }
 
 func (e Economy) SetMoney(player *player.Player, amount int) error {
-	_, err := e.Database.Exec("REPLACE INTO economy (money) VALUES (?)", amount)
+	_, err := e.Database.Exec("REPLACE INTO economy (money) VALUES (?) ", amount)
 	if err != nil {
 		return err
 	}

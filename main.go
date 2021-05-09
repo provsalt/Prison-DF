@@ -37,6 +37,7 @@ import (
 	_ "net/http/pprof"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 )
@@ -159,9 +160,7 @@ func onJoin(p *player.Player) {
 		})
 		p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
 	})
-	time.AfterFunc(time.Second, func() {
-		SendScoreBoard(p)
-	})
+	SendScoreBoard(p)
 	if utils.Development {
 		return
 	}
@@ -176,6 +175,7 @@ func onJoin(p *player.Player) {
 	if err != nil {
 		utils.Logger.Errorln(err)
 	}
+
 }
 
 func startWorld(srv *server.Server, logger *logrus.Logger) (*worldmanager.WorldManager, error) {
@@ -190,11 +190,14 @@ func startWorld(srv *server.Server, logger *logrus.Logger) (*worldmanager.WorldM
 }
 
 func SendScoreBoard(player *player.Player) {
-	err, bal := utils.EconomyDB.Balance(player)
+	bal, err := utils.EconomyDB.Balance(player)
+	mtx := sync.Mutex{}
+	mtx.Lock()
 	if err != nil {
 		player.Disconnect(text.Colourf(utils.GetPrefix() + "An error occured. Please contact the staff team."))
 		utils.GetLogger().Errorf("This error is caused by sebding a scoreboard: \n %v", err)
 	}
+	mtx.Unlock()
 	s := scoreboard.New(text.Colourf(utils.GetPrefix() + "<aqua><b>Prisons</b></aqua>"))
 	_, _ = s.WriteString(text.Colourf("<b><dark-grey>*</dark-grey><gold>%s</gold><red>%v</red></b>", "Your balance: ", bal))
 	player.SendScoreboard(s)

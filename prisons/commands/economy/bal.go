@@ -20,7 +20,7 @@ func (b Bal) Run(source cmd.Source, output *cmd.Output) {
 		if !ok {
 			return
 		}
-		err, bal := utils.EconomyDB.Balance(p)
+		bal, err := utils.EconomyDB.Balance(p)
 
 		if err != nil {
 			output.Printf(err.Error())
@@ -37,7 +37,7 @@ func (b Bal) Run(source cmd.Source, output *cmd.Output) {
 		if !ok {
 			output.Printf(text.Colourf("<red>This player does not exist</red>"))
 		}
-		err, bal := utils.EconomyDB.Balance(p)
+		bal, err := utils.EconomyDB.Balance(p)
 
 		if err != nil {
 			output.Printf(err.Error())
