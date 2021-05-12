@@ -54,9 +54,9 @@ func (e Economy) Close() {
 	}
 }
 
-func (e Economy) Balance(player *player.Player) (int, error) {
+func (e Economy) Balance(player *player.Player) (uint, error) {
 	r := e.Database.QueryRow("SELECT money FROM economy WHERE XUID=?", player.XUID())
-	var money int
+	var money uint
 	err := r.Scan(&money)
 	if err != nil {
 		return 0, err
@@ -64,9 +64,9 @@ func (e Economy) Balance(player *player.Player) (int, error) {
 	return money, nil
 }
 
-func (e Economy) BalanceFromName(player string) (int, error) {
+func (e Economy) BalanceFromName(player string) (uint, error) {
 	r := e.Database.QueryRow("SELECT money FROM economy WHERE username=?", player)
-	var money int
+	var money uint
 	err := r.Scan(&money)
 	if err != nil {
 		return 0, err
@@ -74,7 +74,7 @@ func (e Economy) BalanceFromName(player string) (int, error) {
 	return money, nil
 }
 
-func (e Economy) AddMoney(player *player.Player, amount int) error {
+func (e Economy) AddMoney(player *player.Player, amount uint) error {
 	bal, err := e.Balance(player)
 	if err != nil {
 		return err
@@ -86,7 +86,7 @@ func (e Economy) AddMoney(player *player.Player, amount int) error {
 	return nil
 }
 
-func (e Economy) ReduceMoney(player *player.Player, amount int) error {
+func (e Economy) ReduceMoney(player *player.Player, amount uint) error {
 	bal, err := e.Balance(player)
 	if err != nil {
 		return err
@@ -98,7 +98,7 @@ func (e Economy) ReduceMoney(player *player.Player, amount int) error {
 	return nil
 }
 
-func (e Economy) SetMoney(player *player.Player, amount int) error {
+func (e Economy) SetMoney(player *player.Player, amount uint) error {
 	_, err := e.Database.Exec("REPLACE INTO economy (money) VALUES (?) ", amount)
 	if err != nil {
 		return err
