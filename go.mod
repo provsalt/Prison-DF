@@ -18,7 +18,7 @@ require (
 	github.com/muhammadmuzzammil1998/jsonc v0.0.0-20201229145248-615b0916ca38 // indirect
 	github.com/nakabonne/gosivy v0.2.0
 	github.com/pelletier/go-toml v1.9.0
-	github.com/sandertv/gophertunnel v1.12.1
+	github.com/sandertv/gophertunnel v1.12.4
 	github.com/shirou/gopsutil v3.21.4+incompatible // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
