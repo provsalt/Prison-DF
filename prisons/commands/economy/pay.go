@@ -14,7 +14,7 @@ type SubPay string
 type Pay struct {
 	Sub    SubPay
 	Player []cmd.Target
-	Amount int
+	Amount uint
 }
 
 func (p Pay) Run(source cmd.Source, output *cmd.Output) {

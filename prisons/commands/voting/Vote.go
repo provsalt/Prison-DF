@@ -71,8 +71,8 @@ func Success(player *player.Player) {
 		Volume:    0.2,
 		Pitch:     1,
 	})
-	utils.Session_writePacket(utils.Player_session(player), &packet.ActorEvent{
-		EntityRuntimeID: 1,
-		EventType:       packet.ActorEventConsumeTotem,
-	})
+	//utils.Session_writePacket(utils.Player_session(player), &packet.ActorEvent{
+	//	EntityRuntimeID: 1,
+	//	EventType:       packet.ActorEventConsumeTotem,
+	//})
 }

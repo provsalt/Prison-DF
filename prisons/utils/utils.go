@@ -8,7 +8,7 @@ import (
 	"github.com/df-mc/dragonfly/server"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/session"
-	worldmanager2 "github.com/emperials/df-worldmanager"
+	"github.com/df-plus/worldmanager"
 	"github.com/go-gl/mathgl/mgl32"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/sandertv/gophertunnel/minecraft"
@@ -21,17 +21,17 @@ var Server *server.Server
 
 var Logger *logrus.Logger
 
-var Worldmanager *worldmanager2.WorldManager
+var Worldmanager *worldmanager.WorldManager
 
-// var Economy *economy.Economy
-//
-// var Ranks *ranks.RankApi
+var Economy *economy.Economy
+
+var Ranks *ranks.RankApi
 
 var (
 	RanksDB     *ranks.RankApi
 	EconomyDB   *economy.Economy
 	Punishments *punishment.Database
-	UserDB      *userinfo.Database
+	UserDB      *userinfo.UserInfo
 )
 
 // Development mode
@@ -53,7 +53,7 @@ func Vec64To32(vec3 mgl64.Vec3) mgl32.Vec3 {
 	return mgl32.Vec3{float32(vec3[0]), float32(vec3[1]), float32(vec3[2])}
 }
 
-func GetWorldmanager() *worldmanager2.WorldManager {
+func GetWorldmanager() *worldmanager.WorldManager {
 	return Worldmanager
 }
 

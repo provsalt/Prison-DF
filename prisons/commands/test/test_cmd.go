@@ -28,7 +28,7 @@ func (t TestCmd) Run(source cmd.Source, output *cmd.Output) {
 		block.CoalOre{}:   {60, 90},
 		block.CoalBlock{}: {90, 100},
 	}}}
-	utils.GetServer().World().BuildStructure(cube.BlockPosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
+	utils.GetServer().World().BuildStructure(cube.PosFromVec3(mgl64.Vec3{145, 57, 218}), reset)
 	s.Stop()
 	utils.GetLogger().Infof("Done reseting in %dms", s.Milliseconds()) // Done reseting in 5278ms
 }

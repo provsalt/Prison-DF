@@ -20,16 +20,14 @@ import (
 	"github.com/df-mc/dragonfly/server"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/item"
-	"github.com/df-mc/dragonfly/server/item/tool"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/chat"
 	"github.com/df-mc/dragonfly/server/player/scoreboard"
 	"github.com/df-mc/dragonfly/server/player/title"
 	"github.com/df-mc/dragonfly/server/world"
-	worldmanager "github.com/emperials/df-worldmanager"
+	"github.com/df-plus/worldmanager"
 	"github.com/go-resty/resty/v2"
 	"github.com/nakabonne/gosivy/agent"
-	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/sirupsen/logrus"
 	easy "github.com/t-tomalak/logrus-easy-formatter"
@@ -140,24 +138,24 @@ func main() {
 		onJoin(p)
 	}
 	log.Infof("Shutting down any other existing processes")
-	utils.EconomyDB.Close()
-	_ = manager.Close()
+	//utils.EconomyDB.Close()
+	//_ = manager.Close()
 	agent.Close()
 }
 
 func onJoin(p *player.Player) {
 	go utils.EconomyDB.InitPlayer(p, 2000)
-	p.SetGameMode(world.GameModeSurvival{})
+	p.SetGameMode(world.GameModeSurvival)
 	p.Handle(handlers.NewSpawmHandler(p))
 	p.ShowCoordinates()
-	p.Inventory().AddItem(item.NewStack(item.Pickaxe{Tier: tool.TierIron}, 1))
+	_, _ = p.Inventory().AddItem(item.NewStack(item.Pickaxe{Tier: item.ToolTierDiamond}, 1))
 	t := title.New(utils.GetPrefix())
 	t = t.WithSubtitle(text.Colourf("<aqua>Season 1</aqua>"))
 	time.AfterFunc(time.Second*2, func() {
-		utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
-			EventType:       packet.ActorEventElderGuardianCurse,
-			EntityRuntimeID: 1,
-		})
+		//utils.Session_writePacket(utils.Player_session(p), &packet.ActorEvent{
+		//	EventType:       packet.ElderGuardianCurse,
+		//	EntityRuntimeID: 1,
+		//})
 		p.SendTitle(t.WithFadeOutDuration(time.Second * 7))
 	})
 	SendScoreBoard(p)
@@ -180,12 +178,11 @@ func onJoin(p *player.Player) {
 
 func startWorld(srv *server.Server, logger *logrus.Logger) (*worldmanager.WorldManager, error) {
 	w := srv.World()
-	w.SetDefaultGameMode(world.GameModeSurvival{})
+	w.SetDefaultGameMode(world.GameModeSurvival)
 	w.SetSpawn(cube.Pos{173, 98, 131})
 	w.Handle(worlds.NewSpawnWorldHandler(w))
 
-	dir, _ := os.Getwd()
-	manager := worldmanager.New(srv, dir, logger)
+	manager := worldmanager.New(srv, logger)
 	return manager, nil
 }
 
@@ -203,7 +200,7 @@ func SendScoreBoard(player *player.Player) {
 	player.SendScoreboard(s)
 }
 
-func startDB(log *logrus.Logger) (economy.Economy, ranks.RankApi, userinfo.Database, punishment.Database) {
+func startDB(log *logrus.Logger) (economy.Economy, ranks.RankApi, userinfo.UserInfo, punishment.Database) {
 	cfg, _ := config.ReadConfig()
 	dbinfo := database.Credentials{
 		Username: cfg.Database.Username,

@@ -13,7 +13,7 @@ type SubReduce string
 type Reduce struct {
 	Sub    SubReduce
 	Player []cmd.Target
-	Amount int
+	Amount uint
 }
 
 func (s SubReduce) SubName() string {

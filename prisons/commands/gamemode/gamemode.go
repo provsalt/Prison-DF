@@ -30,16 +30,16 @@ func (g Gamemode) Run(source cmd.Source, output *cmd.Output) {
 	mode := strings.ToLower(g.Gamemode)
 	switch mode {
 	case "creative", "c":
-		p.SetGameMode(world.GameModeCreative{})
+		p.SetGameMode(world.GameModeCreative)
 		output.Printf("Set your own gamemode to creative")
 	case "survival", "s":
-		p.SetGameMode(world.GameModeSurvival{})
+		p.SetGameMode(world.GameModeSurvival)
 		output.Printf("Set your own gamemode to survival")
 	case "adventure", "a":
-		p.SetGameMode(world.GameModeAdventure{})
+		p.SetGameMode(world.GameModeAdventure)
 		output.Printf("Set your own gamemode to adventure")
 	case "spectator":
-		p.SetGameMode(world.GameModeSpectator{})
+		p.SetGameMode(world.GameModeSpectator)
 		output.Printf("Set your own gamemode to spectator")
 	default:
 		output.Printf("Unknown game mode")

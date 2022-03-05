@@ -13,7 +13,7 @@ type SubGive string
 type Give struct {
 	Sub    SubGive
 	Player []cmd.Target
-	Amount int
+	Amount uint
 }
 
 func (s SubGive) SubName() string {

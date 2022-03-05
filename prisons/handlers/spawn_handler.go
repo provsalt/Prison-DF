@@ -5,6 +5,7 @@ import (
 	"Prison/prisons/utils"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/entity/damage"
+	"github.com/df-mc/dragonfly/server/item"
 	"strings"
 	"sync"
 
@@ -55,7 +56,7 @@ func (h SpawnHandler) HandleQuit() {
 	}
 }
 
-func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos cube.Pos) {
+func (handler SpawnHandler) HandleBlockBreak(event *event.Context, pos cube.Pos, drops *[]item.Stack) {
 	if handler.p.World().Name() == "spawn" {
 		spawn := physics.NewAABB(mgl64.Vec3{145, 57, 218}, mgl64.Vec3{201, 95, 274})
 		if !spawn.Vec3Within(pos.Vec3()) {
